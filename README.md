@@ -1,69 +1,162 @@
-# React + TypeScript + Vite
+# Blackjack Casino Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A React + TypeScript blackjack game application built with Vite and styled with Tailwind CSS. This frontend application provides a complete blackjack gaming experience with API integration for backend connectivity.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### 🎮 Game Features
+- **Complete Blackjack Gameplay**: Hit, stand, double down, and split functionality
+- **Real-time Game State**: Live updates of hands, scores, and game status
+- **Betting System**: Configurable betting with balance management
+- **Multiple Game Modes**: Various blackjack variants and rule sets
+- **Animated Cards**: Smooth card dealing and flip animations
+- **Responsive Design**: Works on desktop and mobile devices
 
-## Expanding the ESLint configuration
+### 🛠️ Development Features
+- **Debug Mode**: Comprehensive debugging tools and test components
+- **API Testing**: Built-in API connection testing and validation
+- **Error Boundaries**: Robust error handling and recovery
+- **Hot Module Replacement**: Fast development with Vite HMR
+- **TypeScript**: Full type safety throughout the application
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Tech Stack
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- **Frontend Framework**: React 18 with TypeScript
+- **Build Tool**: Vite with fast refresh
+- **Styling**: Tailwind CSS with custom green casino theme
+- **HTTP Client**: Custom API service layer
+- **Package Manager**: npm
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+## Project Structure
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```
+src/
+├── components/
+│   ├── game/           # Blackjack game components
+│   │   ├── BlackjackGame.tsx
+│   │   ├── Card.tsx
+│   │   ├── Hand.tsx
+│   │   ├── BettingControls.tsx
+│   │   └── ...
+│   ├── debug/          # Development and testing components
+│   └── ErrorBoundary.tsx
+├── hooks/              # Custom React hooks
+│   ├── useBlackjackGame.ts
+│   ├── useBlackjackResults.ts
+│   └── ...
+├── pages/              # Page components
+├── services/           # API service layer
+│   └── cardgame-api.ts
+├── types/              # TypeScript type definitions
+├── utils/              # Utility functions
+└── assets/             # Static assets
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Getting Started
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### Prerequisites
+- Node.js 18+ 
+- npm
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+### Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd blackjack-frontend
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Configure environment**
+   ```bash
+   cp .env.example .env
+   # Edit .env with your API base URL (default: http://localhost:8080)
+   ```
+
+4. **Start development server**
+   ```bash
+   npm run dev
+   ```
+
+5. **Open your browser**
+   Navigate to `http://localhost:5173`
+
+## Available Scripts
+
+- `npm run dev` - Start development server with hot reload
+- `npm run build` - Build for production
+- `npm run preview` - Preview production build locally
+- `npm run lint` - Run ESLint for code quality
+
+## Game Navigation
+
+The application includes a navigation bar with multiple modes:
+
+- **🏠 Home** - Welcome page and game overview
+- **🃏 Blackjack Game** - Main blackjack gameplay
+- **🧪 Blackjack Test** - Workflow testing and validation
+- **🔧 Debug Fix** - Development debugging tools
+- **✅ Fixed Test** - Final integration tests
+- **🔌 API Test** - API connectivity testing
+- **🛠️ API Tools** - API debugging utilities
+
+## API Integration
+
+The application is designed to work with a blackjack API backend:
+
+- **Base URL**: Configurable via `VITE_API_BASE_URL` (default: `http://localhost:8080`)
+- **Endpoints**: Game creation, actions (hit, stand, etc.), and result retrieval
+- **Type Safety**: Full TypeScript definitions for all API responses
+- **Error Handling**: Comprehensive error boundaries and retry logic
+
+### API Service Features
+- Automatic retry on network failures
+- Request/response logging in development
+- Type-safe API calls with full IntelliSense support
+- Configurable timeouts and error handling
+
+## Development
+
+### Debug Mode
+The application includes comprehensive debugging tools:
+- Real-time game state monitoring
+- API request/response inspection
+- Component error boundaries
+- Network connectivity testing
+
+### Security Features
+- Content Security Policy (CSP) configuration
+- XSS and injection prevention
+- Secure coding practices throughout
+- Input validation and sanitization
+
+## Deployment
+
+1. **Build the application**
+   ```bash
+   npm run build
+   ```
+
+2. **Configure production environment**
+   - Update API base URL for production
+   - Enable stricter CSP policies
+   - Configure monitoring and analytics
+
+3. **Deploy static files**
+   The `dist/` folder contains all static assets ready for deployment to any web server or CDN.
+
+## Contributing
+
+1. Follow the existing code style and conventions
+2. Maintain test coverage above 80%
+3. Use security best practices for all changes
+4. Update documentation when adding features
+5. Test thoroughly in both development and production modes
+
+## License
+
+This project is licensed under the MIT License.
