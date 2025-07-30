@@ -49,8 +49,9 @@ const XSS_PATTERNS = [
  * SQL Injection Prevention Patterns
  */
 const SQL_INJECTION_PATTERNS = [
-  /('|(\\')|(;|\\;)|(--|\\/\\*)|(\\b(ALTER|CREATE|DELETE|DROP|EXEC(UTE)?|INSERT( +INTO)?|MERGE|SELECT|UPDATE|UNION( +ALL)?)\\b))/gi,
-  /(\\b(AND|OR)\\b.*(=|>|<|!|<=|>=))/gi,
+  /(\b(ALTER|CREATE|DELETE|DROP|EXEC|EXECUTE|INSERT|MERGE|SELECT|UPDATE|UNION)\b)/gi,
+  /(--|#|\/\*|\*\/)/,
+  /(\bAND\b|\bOR\b).*[=<>]/gi,
   /UNION.*SELECT/gi,
   /SELECT.*FROM/gi,
   /INSERT.*INTO/gi,

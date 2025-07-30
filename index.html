@@ -36,20 +36,15 @@
     <meta http-equiv="X-XSS-Protection" content="1; mode=block" />
     <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
     
-    <!-- Content Security Policy - Strict policy without unsafe directives -->
+    <!-- Content Security Policy - Relaxed for development -->
     <meta http-equiv="Content-Security-Policy" content="
       default-src 'self';
-      script-src 'self' 'nonce-PLACEHOLDER_NONCE' https://js.sentry-cdn.com;
-      style-src 'self' 'nonce-PLACEHOLDER_NONCE' https://fonts.googleapis.com;
+      script-src 'self' 'unsafe-inline' 'unsafe-eval';
+      style-src 'self' 'unsafe-inline';
       font-src 'self' https://fonts.gstatic.com;
-      img-src 'self' data: https:;
-      connect-src 'self' https://sentry.io https://*.sentry.io wss: ws:;
+      img-src 'self' data: https: http:;
+      connect-src 'self' http: https: ws: wss:;
       object-src 'none';
-      base-uri 'self';
-      form-action 'self';
-      frame-ancestors 'none';
-      upgrade-insecure-requests;
-      require-trusted-types-for 'script';
     " />
     
     <!-- Performance and Preloading -->

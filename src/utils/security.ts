@@ -271,7 +271,7 @@ function setupClickjackingProtection(): void {
  */
 function disableDevTools(): void {
   // Detect if developer tools are open
-  let devtools = { open: false, orientation: null };
+  const devtools = { open: false, orientation: null };
   
   setInterval(() => {
     if (window.outerHeight - window.innerHeight > 200 || 

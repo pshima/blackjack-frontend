@@ -60,3 +60,8 @@ API base URL is configured via `VITE_API_BASE_URL` environment variable (default
 - Modular component structure for easy feature expansion
 - Type-safe API integration ready for backend connection
 - Environment-based configuration for different deployment stages
+
+## Best Practices
+- When adding or changing code, make sure the correct tests are added to keep coverage above 80%
+- When adding or changing code, make sure good security practices are used.
+- Update the README.md and CLAUDE.md often to make sure they reflect the current state of the application.
