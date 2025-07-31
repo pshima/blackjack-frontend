@@ -24,7 +24,7 @@ export function GameOverlay({ showBusted, gameResult }: GameOverlayProps) {
   return (
     <>
       {/* Semi-transparent overlay */}
-      <div className="absolute inset-0 z-40 rounded-lg bg-black bg-opacity-60 pointer-events-none" />
+      <div className="absolute inset-0 z-40 rounded-lg bg-opacity-60 pointer-events-none" />
       
       {/* Result text */}
       <div className="absolute inset-0 flex items-center justify-center z-50 pointer-events-none">
