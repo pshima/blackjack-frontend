@@ -213,7 +213,7 @@ export const ApiConnectionDebug: React.FC = () => {
           <button
             onClick={quickFixApi}
             disabled={isRunning}
-            className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded transition-all"
+            className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-sm transition-all"
           >
             🚀 Quick Fix API Config
           </button>
@@ -231,7 +231,7 @@ export const ApiConnectionDebug: React.FC = () => {
         ) : (
           <div className="space-y-3">
             {tests.map((test, index) => (
-              <div key={index} className="flex items-center justify-between bg-primary-900 p-4 rounded border">
+              <div key={index} className="flex items-center justify-between bg-primary-900 p-4 rounded-sm border">
                 <div className="flex-1">
                   <div className="flex items-center gap-3">
                     <span className={`text-sm font-bold ${

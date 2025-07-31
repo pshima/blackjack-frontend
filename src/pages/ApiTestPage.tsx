@@ -86,46 +86,46 @@ export const ApiTestPage: React.FC = () => {
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
         {/* Test Controls */}
-        <div className="bg-white p-4 rounded-lg shadow">
+        <div className="bg-white p-4 rounded-lg shadow-sm">
           <h2 className="text-xl font-semibold mb-3">API Tests</h2>
           <div className="space-y-2">
             <button
               onClick={testHealthCheck}
-              className="w-full bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+              className="w-full bg-blue-500 text-white px-4 py-2 rounded-sm hover:bg-blue-600"
             >
               Test Health Check
             </button>
             <button
               onClick={testCreateGame}
-              className="w-full bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+              className="w-full bg-green-500 text-white px-4 py-2 rounded-sm hover:bg-green-600"
             >
               Create New Game
             </button>
             <button
               onClick={testAddPlayer}
               disabled={!blackjackGame.gameId}
-              className="w-full bg-purple-500 text-white px-4 py-2 rounded hover:bg-purple-600 disabled:bg-gray-300"
+              className="w-full bg-purple-500 text-white px-4 py-2 rounded-sm hover:bg-purple-600 disabled:bg-gray-300"
             >
               Add Player
             </button>
             <button
               onClick={testStartGame}
               disabled={!blackjackGame.gameId || blackjackGame.players.length === 0}
-              className="w-full bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600 disabled:bg-gray-300"
+              className="w-full bg-yellow-500 text-white px-4 py-2 rounded-sm hover:bg-yellow-600 disabled:bg-gray-300"
             >
               Start Game
             </button>
             <button
               onClick={testHit}
               disabled={!blackjackGame.isGameStarted || !currentPlayerId}
-              className="w-full bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 disabled:bg-gray-300"
+              className="w-full bg-red-500 text-white px-4 py-2 rounded-sm hover:bg-red-600 disabled:bg-gray-300"
             >
               Hit
             </button>
             <button
               onClick={testStand}
               disabled={!blackjackGame.isGameStarted || !currentPlayerId}
-              className="w-full bg-orange-500 text-white px-4 py-2 rounded hover:bg-orange-600 disabled:bg-gray-300"
+              className="w-full bg-orange-500 text-white px-4 py-2 rounded-sm hover:bg-orange-600 disabled:bg-gray-300"
             >
               Stand
             </button>
@@ -133,7 +133,7 @@ export const ApiTestPage: React.FC = () => {
         </div>
 
         {/* Game State */}
-        <div className="bg-white p-4 rounded-lg shadow">
+        <div className="bg-white p-4 rounded-lg shadow-sm">
           <h2 className="text-xl font-semibold mb-3">Current Game State</h2>
           <div className="space-y-1 text-sm">
             <p><strong>Game ID:</strong> {blackjackGame.gameId || 'None'}</p>
@@ -146,7 +146,7 @@ export const ApiTestPage: React.FC = () => {
       </div>
 
       {/* Available Games */}
-      <div className="bg-white p-4 rounded-lg shadow mb-6">
+      <div className="bg-white p-4 rounded-lg shadow-sm mb-6">
         <h2 className="text-xl font-semibold mb-3">
           Available Games ({gameList.gameCount})
         </h2>
@@ -172,7 +172,7 @@ export const ApiTestPage: React.FC = () => {
       </div>
 
       {/* Deck Types */}
-      <div className="bg-white p-4 rounded-lg shadow mb-6">
+      <div className="bg-white p-4 rounded-lg shadow-sm mb-6">
         <h2 className="text-xl font-semibold mb-3">Available Deck Types</h2>
         {deckTypes.isLoading ? (
           <p>Loading deck types...</p>
@@ -192,7 +192,7 @@ export const ApiTestPage: React.FC = () => {
       </div>
 
       {/* Test Results */}
-      <div className="bg-white p-4 rounded-lg shadow">
+      <div className="bg-white p-4 rounded-lg shadow-sm">
         <h2 className="text-xl font-semibold mb-3">Test Results</h2>
         <div className="space-y-1 max-h-64 overflow-y-auto">
           {testResults.length === 0 ? (

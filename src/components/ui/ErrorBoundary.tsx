@@ -121,7 +121,7 @@ class ErrorBoundary extends Component<Props, State> {
       new Error(this.state.sanitizedMessage || 'An unexpected error occurred');
       
       return (
-        <div className="min-h-screen bg-gradient-to-br from-primary-50 to-primary-100 flex items-center justify-center p-4">
+        <div className="min-h-screen bg-linear-to-br from-primary-50 to-primary-100 flex items-center justify-center p-4">
           <div className="max-w-md w-full">
             <div className="bg-white rounded-lg shadow-lg p-6">
               <div className="text-center">
@@ -143,7 +143,7 @@ class ErrorBoundary extends Component<Props, State> {
                 )}
                 <button
                   onClick={this.handleRetry}
-                  className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
+                  className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-primary-600 hover:bg-primary-700 focus:outline-hidden focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
                 >
                   Try Again
                 </button>

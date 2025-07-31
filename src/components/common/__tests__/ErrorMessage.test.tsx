@@ -79,9 +79,9 @@ describe('ErrorMessage Component', () => {
         'px-3',
         'py-1',
         'text-sm',
-        'rounded',
+        'rounded-sm',
         'hover:bg-red-700',
-        'focus:outline-none',
+        'focus:outline-hidden',
         'focus:ring-2',
         'focus:ring-red-500',
         'focus:ring-offset-2'
@@ -221,7 +221,7 @@ describe('ErrorMessage Component', () => {
       const flexContainer = container.querySelector('.flex.items-start');
       expect(flexContainer).toBeInTheDocument();
       
-      const iconContainer = flexContainer?.querySelector('.flex-shrink-0');
+      const iconContainer = flexContainer?.querySelector('.shrink-0');
       expect(iconContainer).toBeInTheDocument();
       
       const contentContainer = flexContainer?.querySelector('.ml-3.flex-1');

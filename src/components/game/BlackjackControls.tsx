@@ -107,7 +107,7 @@ export const BlackjackControls: React.FC<BlackjackControlsProps> = ({
 
       {/* Strategy Hints */}
       {playerHandValue && playerHandValue < 21 && (
-        <div className="mt-4 p-3 bg-primary-700 rounded border border-primary-600">
+        <div className="mt-4 p-3 bg-primary-700 rounded-sm border border-primary-600">
           <p className="text-xs text-primary-200 text-center">
             💡 {getStrategyHint(playerHandValue)}
           </p>

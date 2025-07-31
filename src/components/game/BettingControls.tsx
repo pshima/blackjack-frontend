@@ -96,7 +96,7 @@ export const BettingControls: React.FC<BettingControlsProps> = ({
             className="
               w-full pl-8 pr-4 py-3 bg-primary-700 border border-primary-600 
               rounded-lg text-white placeholder-primary-300
-              focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent
+              focus:outline-hidden focus:ring-2 focus:ring-yellow-400 focus:border-transparent
               disabled:bg-gray-600 disabled:text-gray-400 disabled:cursor-not-allowed
             "
             placeholder="Enter bet amount"

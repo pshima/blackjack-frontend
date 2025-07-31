@@ -99,20 +99,20 @@ export const CorsDebug: React.FC = () => {
         <h2 className="text-xl font-semibold text-white mb-4">🔧 CORS Fix Instructions</h2>
         
         <div className="space-y-4">
-          <div className="bg-primary-900 p-4 rounded border border-primary-700">
+          <div className="bg-primary-900 p-4 rounded-sm border border-primary-700">
             <h3 className="text-green-400 font-semibold mb-2">✅ Frontend (Already Fixed)</h3>
             <p className="text-primary-300 text-sm">
               Frontend is correctly configured to send requests to <code>http://localhost:8080</code>
             </p>
           </div>
 
-          <div className="bg-red-900 p-4 rounded border border-red-600">
+          <div className="bg-red-900 p-4 rounded-sm border border-red-600">
             <h3 className="text-red-400 font-semibold mb-2">❌ Backend (Needs CORS Headers)</h3>
             <p className="text-primary-300 text-sm mb-3">
               The cardgame-api backend needs to add CORS headers to allow requests from <code>http://localhost:3001</code>
             </p>
             
-            <div className="bg-black p-3 rounded font-mono text-xs text-green-400 overflow-x-auto">
+            <div className="bg-black p-3 rounded-sm font-mono text-xs text-green-400 overflow-x-auto">
               <div className="mb-2 text-primary-300"># Add these headers to your backend responses:</div>
               <div>Access-Control-Allow-Origin: http://localhost:3001</div>
               <div>Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS</div>
@@ -129,27 +129,27 @@ export const CorsDebug: React.FC = () => {
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {/* Python/Flask */}
-          <div className="bg-primary-900 p-4 rounded border border-primary-700">
+          <div className="bg-primary-900 p-4 rounded-sm border border-primary-700">
             <h3 className="text-blue-400 font-semibold mb-2">🐍 Python/Flask</h3>
-            <div className="bg-black p-3 rounded font-mono text-xs text-green-400 overflow-x-auto">
+            <div className="bg-black p-3 rounded-sm font-mono text-xs text-green-400 overflow-x-auto">
               <div>from flask_cors import CORS</div>
               <div className="mt-1">CORS(app, origins=['http://localhost:3001'])</div>
             </div>
           </div>
 
           {/* Node.js/Express */}
-          <div className="bg-primary-900 p-4 rounded border border-primary-700">
+          <div className="bg-primary-900 p-4 rounded-sm border border-primary-700">
             <h3 className="text-yellow-400 font-semibold mb-2">🟨 Node.js/Express</h3>
-            <div className="bg-black p-3 rounded font-mono text-xs text-green-400 overflow-x-auto">
+            <div className="bg-black p-3 rounded-sm font-mono text-xs text-green-400 overflow-x-auto">
               <div>const cors = require('cors');</div>
               <div className="mt-1">app.use(cors({`{origin: 'http://localhost:3001'}`}));</div>
             </div>
           </div>
 
           {/* FastAPI */}
-          <div className="bg-primary-900 p-4 rounded border border-primary-700">
+          <div className="bg-primary-900 p-4 rounded-sm border border-primary-700">
             <h3 className="text-green-400 font-semibold mb-2">⚡ FastAPI</h3>
-            <div className="bg-black p-3 rounded font-mono text-xs text-green-400 overflow-x-auto">
+            <div className="bg-black p-3 rounded-sm font-mono text-xs text-green-400 overflow-x-auto">
               <div>from fastapi.middleware.cors import CORSMiddleware</div>
               <div className="mt-1">app.add_middleware(CORSMiddleware,</div>
               <div>    allow_origins=['http://localhost:3001'])</div>
@@ -157,9 +157,9 @@ export const CorsDebug: React.FC = () => {
           </div>
 
           {/* Manual Headers */}
-          <div className="bg-primary-900 p-4 rounded border border-primary-700">
+          <div className="bg-primary-900 p-4 rounded-sm border border-primary-700">
             <h3 className="text-purple-400 font-semibold mb-2">🔧 Manual Headers</h3>
-            <div className="bg-black p-3 rounded font-mono text-xs text-green-400 overflow-x-auto">
+            <div className="bg-black p-3 rounded-sm font-mono text-xs text-green-400 overflow-x-auto">
               <div>response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3001'</div>
             </div>
           </div>

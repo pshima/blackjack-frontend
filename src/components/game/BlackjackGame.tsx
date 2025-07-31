@@ -134,7 +134,7 @@ export const BlackjackGame: React.FC<BlackjackGameProps> = ({ className = '' }) 
           <p className="text-red-600 mb-4">{error}</p>
           <button
             onClick={handleStartNewRound}
-            className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700"
+            className="bg-red-600 text-white px-4 py-2 rounded-sm hover:bg-red-700"
           >
             Start Over
           </button>

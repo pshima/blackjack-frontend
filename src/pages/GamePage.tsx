@@ -64,7 +64,7 @@ export default function GamePage({ className = '' }: GamePageProps) {
 
   if (error) {
     return (
-      <div className={`min-h-screen bg-gradient-to-br from-primary-50 to-primary-100 flex items-center justify-center p-4 ${className}`}>
+      <div className={`min-h-screen bg-linear-to-br from-primary-50 to-primary-100 flex items-center justify-center p-4 ${className}`}>
         <ErrorMessage
           error={error}
           retry={clearError}
@@ -78,7 +78,7 @@ export default function GamePage({ className = '' }: GamePageProps) {
 
   if (isLoading && !gameState) {
     return (
-      <div className={`min-h-screen bg-gradient-to-br from-primary-50 to-primary-100 flex items-center justify-center ${className}`}>
+      <div className={`min-h-screen bg-linear-to-br from-primary-50 to-primary-100 flex items-center justify-center ${className}`}>
         <LoadingSpinner size="lg" message="Loading game..." />
       </div>
     );
@@ -88,7 +88,7 @@ export default function GamePage({ className = '' }: GamePageProps) {
   setTimeout(endTimer, 0);
 
   return (
-    <div className={`min-h-screen bg-gradient-to-br from-primary-50 to-primary-100 ${className}`}>
+    <div className={`min-h-screen bg-linear-to-br from-primary-50 to-primary-100 ${className}`}>
       <div className="container mx-auto px-4 py-8">
         <header className="text-center mb-8">
           <h1 className="text-4xl font-bold text-primary-900 mb-2">

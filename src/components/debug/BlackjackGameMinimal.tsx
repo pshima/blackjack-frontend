@@ -80,7 +80,7 @@ export const BlackjackGameMinimal: React.FC = () => {
           <h3 className="text-white text-lg font-semibold mb-3">Dealer</h3>
           <div className="flex justify-center gap-2 mb-2">
             {gameState.dealerHand.map((card, index) => (
-              <div key={index} className="bg-white text-black p-3 rounded border text-center font-bold min-w-[50px]">
+              <div key={index} className="bg-white text-black p-3 rounded-sm border text-center font-bold min-w-[50px]">
                 {card}
               </div>
             ))}
@@ -99,7 +99,7 @@ export const BlackjackGameMinimal: React.FC = () => {
           <h3 className="text-white text-lg font-semibold mb-3">Your Hand</h3>
           <div className="flex justify-center gap-2 mb-2">
             {gameState.playerHand.map((card, index) => (
-              <div key={index} className="bg-white text-black p-3 rounded border text-center font-bold min-w-[50px]">
+              <div key={index} className="bg-white text-black p-3 rounded-sm border text-center font-bold min-w-[50px]">
                 {card}
               </div>
             ))}
@@ -118,7 +118,7 @@ export const BlackjackGameMinimal: React.FC = () => {
           {gameState.gamePhase === 'betting' && (
             <button
               onClick={dealInitialCards}
-              className="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded transition-all"
+              className="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-sm transition-all"
             >
               Deal Cards
             </button>
@@ -128,13 +128,13 @@ export const BlackjackGameMinimal: React.FC = () => {
             <>
               <button
                 onClick={hit}
-                className="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded transition-all"
+                className="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-sm transition-all"
               >
                 🃏 Hit
               </button>
               <button
                 onClick={stand}
-                className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded transition-all"
+                className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-sm transition-all"
               >
                 ✋ Stand
               </button>
@@ -144,7 +144,7 @@ export const BlackjackGameMinimal: React.FC = () => {
           {gameState.gamePhase === 'finished' && (
             <button
               onClick={reset}
-              className="bg-yellow-600 hover:bg-yellow-700 text-white font-bold py-3 px-6 rounded transition-all"
+              className="bg-yellow-600 hover:bg-yellow-700 text-white font-bold py-3 px-6 rounded-sm transition-all"
             >
               🔄 New Game
             </button>

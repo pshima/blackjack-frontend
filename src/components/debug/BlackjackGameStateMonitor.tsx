@@ -109,7 +109,7 @@ export const BlackjackGameStateMonitor: React.FC = () => {
             
             <button
               onClick={clearHistory}
-              className="px-4 py-2 bg-yellow-600 hover:bg-yellow-700 text-white rounded transition-all"
+              className="px-4 py-2 bg-yellow-600 hover:bg-yellow-700 text-white rounded-sm transition-all"
             >
               🗑️ Clear
             </button>
@@ -128,7 +128,7 @@ export const BlackjackGameStateMonitor: React.FC = () => {
           <div className="space-y-3">
             <button
               onClick={testCreateGame}
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded transition-all"
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-sm transition-all"
             >
               🎮 Trigger createNewGame()
             </button>
@@ -178,7 +178,7 @@ export const BlackjackGameStateMonitor: React.FC = () => {
 
         <details>
           <summary className="text-primary-300 cursor-pointer mb-2">View Full State</summary>
-          <pre className="text-xs bg-black p-3 rounded overflow-auto text-green-400">
+          <pre className="text-xs bg-black p-3 rounded-sm overflow-auto text-green-400">
             {JSON.stringify({
               gameId: blackjackGame.gameId,
               players: blackjackGame.players,
@@ -199,7 +199,7 @@ export const BlackjackGameStateMonitor: React.FC = () => {
         <div className="bg-primary-800 rounded-lg p-6 border border-primary-600 mb-6">
           <h2 className="text-xl font-semibold text-white mb-4">🎮 Live BlackjackGame Component</h2>
           <ErrorBoundary componentName="BlackjackGame Live Test">
-            <div className="bg-primary-900 p-4 rounded border">
+            <div className="bg-primary-900 p-4 rounded-sm border">
               <BlackjackGame />
             </div>
           </ErrorBoundary>
@@ -217,7 +217,7 @@ export const BlackjackGameStateMonitor: React.FC = () => {
         ) : (
           <div className="space-y-3 max-h-96 overflow-y-auto">
             {stateHistory.map((state, index) => (
-              <div key={index} className="bg-primary-900 p-3 rounded border">
+              <div key={index} className="bg-primary-900 p-3 rounded-sm border">
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-yellow-400 text-sm font-mono">
                     #{index + 1} - {state.timestamp}
@@ -239,7 +239,7 @@ export const BlackjackGameStateMonitor: React.FC = () => {
                   <summary className="text-primary-300 text-sm cursor-pointer">
                     View State Data
                   </summary>
-                  <pre className="mt-2 text-xs bg-black p-2 rounded overflow-auto text-green-400">
+                  <pre className="mt-2 text-xs bg-black p-2 rounded-sm overflow-auto text-green-400">
                     {JSON.stringify(state, null, 2)}
                   </pre>
                 </details>

@@ -14,7 +14,7 @@ export function AdminPage() {
   const [currentPage, setCurrentPage] = useState<'home' | 'blackjack' | 'blackjack-test' | 'blackjack-debug' | 'blackjack-fixed-test' | 'api-test' | 'api-test-tools'>('home');
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary-900 via-primary-800 to-primary-900 p-5">
+    <div className="min-h-screen bg-linear-to-br from-primary-900 via-primary-800 to-primary-900 p-5">
       <div className="mb-4">
         <h1 className="text-2xl font-bold text-white mb-2">🔧 Admin Dashboard</h1>
         <p className="text-primary-300">Development and testing tools</p>
@@ -33,7 +33,7 @@ export function AdminPage() {
           </button>
           
           {/* Game Pages */}
-          <div className="flex gap-1 bg-primary-900 rounded px-1 py-1">
+          <div className="flex gap-1 bg-primary-900 rounded-sm px-1 py-1">
             <button
               onClick={() => setCurrentPage('blackjack')}
               className={`px-3 py-1 rounded text-sm transition-all ${
@@ -69,7 +69,7 @@ export function AdminPage() {
           </div>
           
           {/* API Pages */}
-          <div className="flex gap-1 bg-primary-900 rounded px-1 py-1">
+          <div className="flex gap-1 bg-primary-900 rounded-sm px-1 py-1">
             <button
               onClick={() => setCurrentPage('api-test')}
               className={`px-3 py-1 rounded text-sm transition-all ${
@@ -90,7 +90,7 @@ export function AdminPage() {
           
           {/* Debug indicator */}
           <div className="ml-auto flex items-center">
-            <span className="text-xs text-primary-300 bg-primary-900 px-2 py-1 rounded">
+            <span className="text-xs text-primary-300 bg-primary-900 px-2 py-1 rounded-sm">
               🚧 Debug Mode
             </span>
           </div>

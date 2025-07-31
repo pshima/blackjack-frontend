@@ -100,7 +100,7 @@ const TestActualImports: React.FC = () => {
           
           <button
             onClick={runAllTests}
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded mb-4"
+            className="w-full bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-sm mb-4"
           >
             Test All Component Imports
           </button>
@@ -127,7 +127,7 @@ const TestActualImports: React.FC = () => {
               <div key={componentName}>
                 <h3 className="text-white font-medium mb-2">{componentName}</h3>
                 <ErrorBoundary componentName={`${componentName} Render Test`}>
-                  <div className="bg-primary-900 p-3 rounded border">
+                  <div className="bg-primary-900 p-3 rounded-sm border">
                     <TestComponentRender componentName={componentName} Component={Component} />
                   </div>
                 </ErrorBoundary>

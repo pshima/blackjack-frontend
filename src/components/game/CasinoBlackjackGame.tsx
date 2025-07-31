@@ -152,7 +152,7 @@ export const CasinoBlackjackGame: React.FC<CasinoBlackjackGameProps> = ({ classN
   if (error) {
     return (
       <div className={`min-h-screen flex items-center justify-center ${className}`}>
-        <div className="bg-gradient-to-br from-red-900 to-red-800 text-white p-8 rounded-2xl shadow-2xl border border-red-600 max-w-md">
+        <div className="bg-linear-to-br from-red-900 to-red-800 text-white p-8 rounded-2xl shadow-2xl border border-red-600 max-w-md">
           <div className="text-center">
             <div className="text-4xl mb-4">⚠️</div>
             <h3 className="text-xl font-bold mb-4">Game Error</h3>
@@ -170,11 +170,11 @@ export const CasinoBlackjackGame: React.FC<CasinoBlackjackGameProps> = ({ classN
   }
 
   return (
-    <div className={`min-h-screen bg-gradient-to-br from-gray-900 via-green-900 to-gray-900 ${className}`}>
+    <div className={`min-h-screen bg-linear-to-br from-gray-900 via-green-900 to-gray-900 ${className}`}>
       {/* Casino Table Surface */}
       <div className="relative min-h-screen">
         {/* Table Felt Background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-green-800 via-green-700 to-green-800"></div>
+        <div className="absolute inset-0 bg-linear-to-br from-green-800 via-green-700 to-green-800"></div>
         <div className="absolute inset-0 bg-green-700 opacity-90"></div>
         
         {/* Decorative Casino Elements */}
@@ -228,11 +228,11 @@ export const CasinoBlackjackGame: React.FC<CasinoBlackjackGameProps> = ({ classN
 
           {/* Table Center Line */}
           <div className="flex items-center justify-center mb-12">
-            <div className="flex-1 max-w-md h-1 bg-gradient-to-r from-transparent via-yellow-600 to-transparent"></div>
+            <div className="flex-1 max-w-md h-1 bg-linear-to-r from-transparent via-yellow-600 to-transparent"></div>
             <div className="mx-8 bg-yellow-600 text-black font-bold px-6 py-2 rounded-full text-sm">
               🎰 BLACKJACK TABLE 🎰
             </div>
-            <div className="flex-1 max-w-md h-1 bg-gradient-to-r from-transparent via-yellow-600 to-transparent"></div>
+            <div className="flex-1 max-w-md h-1 bg-linear-to-r from-transparent via-yellow-600 to-transparent"></div>
           </div>
 
           {/* Player Section */}
@@ -257,7 +257,7 @@ export const CasinoBlackjackGame: React.FC<CasinoBlackjackGameProps> = ({ classN
 
           {/* Betting Area */}
           <div className="flex justify-center mb-8">
-            <div className="bg-gradient-to-br from-yellow-800 to-yellow-900 rounded-full w-32 h-32 border-4 border-yellow-600 flex items-center justify-center shadow-2xl">
+            <div className="bg-linear-to-br from-yellow-800 to-yellow-900 rounded-full w-32 h-32 border-4 border-yellow-600 flex items-center justify-center shadow-2xl">
               <div className="text-center">
                 <div className="text-yellow-200 text-xs font-bold">BET</div>
                 <div className="text-white font-bold text-lg">${currentBet}</div>
@@ -327,7 +327,7 @@ export const CasinoBlackjackGame: React.FC<CasinoBlackjackGameProps> = ({ classN
                   <button
                     onClick={handleDealCards}
                     disabled={isLoading || currentBet > balance}
-                    className="bg-gradient-to-r from-yellow-600 to-yellow-500 hover:from-yellow-500 hover:to-yellow-400 text-black font-bold py-4 px-8 rounded-xl text-lg transition-all shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="bg-linear-to-r from-yellow-600 to-yellow-500 hover:from-yellow-500 hover:to-yellow-400 text-black font-bold py-4 px-8 rounded-xl text-lg transition-all shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     🃏 DEAL CARDS
                   </button>
@@ -402,7 +402,7 @@ export const CasinoBlackjackGame: React.FC<CasinoBlackjackGameProps> = ({ classN
 
                 <button
                   onClick={handleStartNewRound}
-                  className="bg-gradient-to-r from-yellow-600 to-yellow-500 hover:from-yellow-500 hover:to-yellow-400 text-black font-bold py-4 px-8 rounded-xl text-lg transition-all shadow-lg"
+                  className="bg-linear-to-r from-yellow-600 to-yellow-500 hover:from-yellow-500 hover:to-yellow-400 text-black font-bold py-4 px-8 rounded-xl text-lg transition-all shadow-lg"
                 >
                   🔄 NEW ROUND
                 </button>

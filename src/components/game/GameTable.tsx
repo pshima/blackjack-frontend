@@ -23,7 +23,7 @@ export const GameTable: React.FC<GameTableProps> = ({
   return (
     <div className={`relative ${className}`}>
       {/* Table Background */}
-      <div className="bg-gradient-to-br from-primary-900 via-primary-800 to-primary-900 rounded-2xl p-8 shadow-2xl border border-primary-600">
+      <div className="bg-linear-to-br from-primary-900 via-primary-800 to-primary-900 rounded-2xl p-8 shadow-2xl border border-primary-600">
         
         {/* Table Felt Pattern */}
         <div className="absolute inset-4 bg-primary-700 rounded-xl opacity-30"></div>

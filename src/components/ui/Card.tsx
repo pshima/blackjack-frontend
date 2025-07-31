@@ -104,7 +104,7 @@ const Card: React.FC<CardProps> = ({
       {isHidden ? (
         // Face-down card showing generic card back pattern
         <div className="flex items-center justify-center h-full">
-          <div className="w-6 h-8 bg-white/20 rounded-sm" />
+          <div className="w-6 h-8 bg-white/20 rounded-xs" />
         </div>
       ) : (
         // Face-up card showing rank and suit in traditional playing card layout

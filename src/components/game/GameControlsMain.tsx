@@ -29,7 +29,7 @@ export function GameControlsMain({
       <button
         onClick={onDeal}
         disabled={disabled}
-        className="px-6 py-3 rounded text-white font-semibold transition-all min-w-32 bg-primary-700 hover:bg-primary-600 hover:-translate-y-0.5 hover:shadow-lg disabled:bg-gray-600 disabled:cursor-not-allowed disabled:hover:transform-none shadow-md"
+        className="px-6 py-3 rounded-sm text-white font-semibold transition-all min-w-32 bg-primary-700 hover:bg-primary-600 hover:-translate-y-0.5 hover:shadow-lg disabled:bg-gray-600 disabled:cursor-not-allowed disabled:hover:transform-none shadow-md"
       >
         {isDealLoading ? 'Dealing...' : 'Deal'}
       </button>
@@ -54,7 +54,7 @@ export function GameControlsMain({
         <button
           onClick={onHit}
           disabled={hitDisabled}
-          className="px-6 py-3 rounded text-white font-semibold transition-all min-w-24 bg-primary-700 hover:bg-primary-600 hover:-translate-y-0.5 hover:shadow-lg disabled:bg-gray-600 disabled:cursor-not-allowed disabled:hover:transform-none shadow-md"
+          className="px-6 py-3 rounded-sm text-white font-semibold transition-all min-w-24 bg-primary-700 hover:bg-primary-600 hover:-translate-y-0.5 hover:shadow-lg disabled:bg-gray-600 disabled:cursor-not-allowed disabled:hover:transform-none shadow-md"
         >
           Hit
         </button>
@@ -63,7 +63,7 @@ export function GameControlsMain({
         <button
           onClick={onStand}
           disabled={standDisabled}
-          className="px-6 py-3 rounded text-white font-semibold transition-all min-w-24 bg-red-600 hover:bg-red-700 hover:-translate-y-0.5 hover:shadow-lg disabled:bg-gray-600 disabled:cursor-not-allowed disabled:hover:transform-none shadow-md"
+          className="px-6 py-3 rounded-sm text-white font-semibold transition-all min-w-24 bg-red-600 hover:bg-red-700 hover:-translate-y-0.5 hover:shadow-lg disabled:bg-gray-600 disabled:cursor-not-allowed disabled:hover:transform-none shadow-md"
         >
           Stand
         </button>

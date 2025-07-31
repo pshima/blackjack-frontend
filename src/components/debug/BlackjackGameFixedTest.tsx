@@ -91,7 +91,7 @@ export const BlackjackGameFixedTest: React.FC = () => {
           
           <button
             onClick={testGameFlowSequence}
-            className="w-full bg-green-600 hover:bg-green-700 text-white px-4 py-3 rounded font-bold transition-all"
+            className="w-full bg-green-600 hover:bg-green-700 text-white px-4 py-3 rounded-sm font-bold transition-all"
           >
             📋 Show Expected Game Flow
           </button>
@@ -154,7 +154,7 @@ export const BlackjackGameFixedTest: React.FC = () => {
       {showGame && (
         <div className="bg-primary-800 rounded-lg p-6 border border-primary-600">
           <h2 className="text-xl font-semibold text-white mb-4">🎮 BlackjackGameFixed Component</h2>
-          <div className="bg-primary-900 p-4 rounded border">
+          <div className="bg-primary-900 p-4 rounded-sm border">
             <ErrorBoundary componentName="BlackjackGameFixed Test">
               <BlackjackGameFixed />
             </ErrorBoundary>

@@ -30,7 +30,7 @@ const ErrorMessage: React.FC<ErrorProps> = ({
     >
       <div className="flex items-start">
         {/* Error icon to visually indicate something went wrong */}
-        <div className="flex-shrink-0">
+        <div className="shrink-0">
           <svg 
             className="w-5 h-5 text-red-400" 
             fill="currentColor" 
@@ -57,7 +57,7 @@ const ErrorMessage: React.FC<ErrorProps> = ({
               <summary className="text-xs text-red-600 cursor-pointer hover:text-red-800">
                 Show technical details
               </summary>
-              <pre className="mt-2 text-xs text-red-600 bg-red-100 p-2 rounded overflow-x-auto">
+              <pre className="mt-2 text-xs text-red-600 bg-red-100 p-2 rounded-sm overflow-x-auto">
                 {errorDetails}
               </pre>
             </details>
@@ -68,7 +68,7 @@ const ErrorMessage: React.FC<ErrorProps> = ({
               <button
                 type="button"
                 onClick={retry}
-                className="bg-red-600 text-white px-3 py-1 text-sm rounded hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
+                className="bg-red-600 text-white px-3 py-1 text-sm rounded-sm hover:bg-red-700 focus:outline-hidden focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
                 aria-label="Try again"
               >
                 Try Again

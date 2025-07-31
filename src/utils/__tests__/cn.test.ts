@@ -79,8 +79,8 @@ describe('commonClasses', () => {
 });
 
 describe('helper constants', () => {
-  it('should have focus ring styles', () => {
-    expect(focusRing).toContain('focus-visible:outline-none');
+  it('should have focus ring-3 styles', () => {
+    expect(focusRing).toContain('focus-visible:outline-hidden');
     expect(focusRing).toContain('focus-visible:ring-2');
     expect(focusRing).toContain('focus-visible:ring-primary-500');
   });

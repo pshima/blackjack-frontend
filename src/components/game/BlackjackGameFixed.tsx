@@ -186,7 +186,7 @@ export const BlackjackGameFixed: React.FC<BlackjackGameFixedProps> = ({ classNam
           <p className="text-red-600 mb-4">{error}</p>
           <button
             onClick={handleStartNewRound}
-            className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700"
+            className="bg-red-600 text-white px-4 py-2 rounded-sm hover:bg-red-700"
           >
             Start Over
           </button>
@@ -249,7 +249,7 @@ export const BlackjackGameFixed: React.FC<BlackjackGameFixedProps> = ({ classNam
               <h3 className="text-white font-semibold mb-4">🏁 Game Complete</h3>
               <button
                 onClick={handleStartNewRound}
-                className="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded transition-all"
+                className="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-sm transition-all"
               >
                 🔄 New Round
               </button>

@@ -28,9 +28,9 @@ const HomePage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-casino-felt via-primary-800 to-casino-felt">
+    <div className="min-h-screen bg-linear-to-br from-casino-felt via-primary-800 to-casino-felt">
       {/* Background pattern */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,_rgba(255,255,255,0.15)_1px,_transparent_0)] [background-size:20px_20px]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.15)_1px,transparent_0)] bg-size-[20px_20px]" />
       
       <div className="relative min-h-screen flex items-center justify-center p-4">
         <div className="text-center max-w-4xl mx-auto">

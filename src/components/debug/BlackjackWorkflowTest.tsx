@@ -212,7 +212,7 @@ export const BlackjackWorkflowTest: React.FC = () => {
                 <button
                   onClick={simulateCreateGame}
                   disabled={workflow.currentStep !== 'navigate'}
-                  className="flex-1 text-left bg-primary-700 hover:bg-primary-600 disabled:bg-gray-600 disabled:cursor-not-allowed text-white px-4 py-2 rounded transition-all"
+                  className="flex-1 text-left bg-primary-700 hover:bg-primary-600 disabled:bg-gray-600 disabled:cursor-not-allowed text-white px-4 py-2 rounded-sm transition-all"
                 >
                   Navigate to Blackjack → Create Game
                 </button>
@@ -231,21 +231,21 @@ export const BlackjackWorkflowTest: React.FC = () => {
                   <button
                     onClick={() => simulatePlaceBet(10)}
                     disabled={workflow.currentStep !== 'create-game'}
-                    className="bg-primary-700 hover:bg-primary-600 disabled:bg-gray-600 disabled:cursor-not-allowed text-white px-3 py-2 rounded text-sm transition-all"
+                    className="bg-primary-700 hover:bg-primary-600 disabled:bg-gray-600 disabled:cursor-not-allowed text-white px-3 py-2 rounded-sm text-sm transition-all"
                   >
                     Bet $10
                   </button>
                   <button
                     onClick={() => simulatePlaceBet(25)}
                     disabled={workflow.currentStep !== 'create-game'}
-                    className="bg-primary-700 hover:bg-primary-600 disabled:bg-gray-600 disabled:cursor-not-allowed text-white px-3 py-2 rounded text-sm transition-all"
+                    className="bg-primary-700 hover:bg-primary-600 disabled:bg-gray-600 disabled:cursor-not-allowed text-white px-3 py-2 rounded-sm text-sm transition-all"
                   >
                     Bet $25
                   </button>
                   <button
                     onClick={() => simulatePlaceBet(50)}
                     disabled={workflow.currentStep !== 'create-game'}
-                    className="bg-primary-700 hover:bg-primary-600 disabled:bg-gray-600 disabled:cursor-not-allowed text-white px-3 py-2 rounded text-sm transition-all"
+                    className="bg-primary-700 hover:bg-primary-600 disabled:bg-gray-600 disabled:cursor-not-allowed text-white px-3 py-2 rounded-sm text-sm transition-all"
                   >
                     Bet $50
                   </button>
@@ -265,14 +265,14 @@ export const BlackjackWorkflowTest: React.FC = () => {
                   <button
                     onClick={simulateHit}
                     disabled={workflow.currentStep !== 'place-bet' || workflow.gameStatus === 'finished'}
-                    className="bg-red-600 hover:bg-red-700 disabled:bg-gray-600 disabled:cursor-not-allowed text-white px-4 py-2 rounded transition-all"
+                    className="bg-red-600 hover:bg-red-700 disabled:bg-gray-600 disabled:cursor-not-allowed text-white px-4 py-2 rounded-sm transition-all"
                   >
                     🃏 HIT
                   </button>
                   <button
                     onClick={simulateStand}
                     disabled={workflow.currentStep !== 'place-bet' || workflow.gameStatus === 'finished'}
-                    className="bg-green-600 hover:bg-green-700 disabled:bg-gray-600 disabled:cursor-not-allowed text-white px-4 py-2 rounded transition-all"
+                    className="bg-green-600 hover:bg-green-700 disabled:bg-gray-600 disabled:cursor-not-allowed text-white px-4 py-2 rounded-sm transition-all"
                   >
                     ✋ STAND
                   </button>
@@ -283,7 +283,7 @@ export const BlackjackWorkflowTest: React.FC = () => {
               <div className="pt-4 border-t border-primary-600">
                 <button
                   onClick={resetWorkflow}
-                  className="w-full bg-yellow-600 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded transition-all"
+                  className="w-full bg-yellow-600 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded-sm transition-all"
                 >
                   🔄 Reset Workflow Test
                 </button>
@@ -350,7 +350,7 @@ export const BlackjackWorkflowTest: React.FC = () => {
           <h2 className="text-xl font-semibold text-white mb-4">
             📋 Activity Log
           </h2>
-          <div className="bg-black rounded p-4 h-64 overflow-y-auto font-mono text-sm">
+          <div className="bg-black rounded-sm p-4 h-64 overflow-y-auto font-mono text-sm">
             {logs.length === 0 ? (
               <p className="text-gray-500">No activity yet. Start the workflow test above.</p>
             ) : (

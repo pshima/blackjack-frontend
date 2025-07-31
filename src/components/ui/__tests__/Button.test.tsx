@@ -173,7 +173,7 @@ describe('Button Component', () => {
       render(<Button>Focusable</Button>);
       
       const button = screen.getByRole('button');
-      expect(button).toHaveClass('focus:outline-none', 'focus:ring-2', 'focus:ring-offset-2');
+      expect(button).toHaveClass('focus:outline-hidden', 'focus:ring-2', 'focus:ring-offset-2');
     });
   });
 

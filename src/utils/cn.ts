@@ -9,7 +9,7 @@ export function cn(...inputs: ClassValue[]) {
 export const commonClasses = {
   // Button variants
   button: {
-    base: 'inline-flex items-center justify-center font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50',
+    base: 'inline-flex items-center justify-center font-medium transition-colors duration-200 focus:outline-hidden focus:ring-2 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50',
     primary: 'bg-primary-600 text-white hover:bg-primary-700 focus:ring-primary-500',
     secondary: 'bg-gray-200 text-gray-900 hover:bg-gray-300 focus:ring-gray-500',
     danger: 'bg-red-600 text-white hover:bg-red-700 focus:ring-red-500',
@@ -25,7 +25,7 @@ export const commonClasses = {
   
   // Input variants
   input: {
-    base: 'block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500',
+    base: 'block w-full rounded-md border-gray-300 shadow-xs focus:border-primary-500 focus:ring-primary-500',
     error: 'border-red-300 focus:border-red-500 focus:ring-red-500',
   },
   
@@ -45,7 +45,7 @@ export const commonClasses = {
 } as const;
 
 // Standard focus ring styling for accessibility
-export const focusRing = 'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2';
+export const focusRing = 'focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2';
 
 // Hides content visually but keeps it available for screen readers
 export const srOnly = 'sr-only';

@@ -185,7 +185,7 @@ export default function GameControls({ className = '' }: GameControlsProps) {
                   {quickBetAmounts.map(amount => (
                     <Button
                       key={amount}
-                      variant={betAmount === amount ? 'primary' : 'outline'}
+                      variant={betAmount === amount ? 'primary' : 'outline-solid'}
                       size="sm"
                       onClick={() => handleBetChange(amount)}
                       disabled={isLoading}

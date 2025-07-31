@@ -63,7 +63,7 @@ const TestHooks: React.FC = () => {
       
       <button
         onClick={runTests}
-        className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded mb-4"
+        className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-sm mb-4"
       >
         Test All Dependencies
       </button>
@@ -127,7 +127,7 @@ const TestBlackjackGameComponent: React.FC = () => {
       
       {componentVersion === 'full' && (
         <ErrorBoundary componentName="BlackjackGame Real">
-          <div className="bg-primary-900 rounded p-4">
+          <div className="bg-primary-900 rounded-sm p-4">
             <p className="text-primary-200 mb-4 text-center">
               🎯 Loading Real BlackjackGame Component...
             </p>

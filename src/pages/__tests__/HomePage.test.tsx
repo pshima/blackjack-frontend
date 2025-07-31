@@ -279,11 +279,11 @@ describe('HomePage Component', () => {
       render(<HomePage />);
       
       // Main background should have gradient and pattern
-      const backgrounds = document.querySelectorAll('.bg-gradient-to-br');
+      const backgrounds = document.querySelectorAll('[class*="bg-linear-to-br"], [class*="bg-gradient-to-br"]');
       expect(backgrounds.length).toBeGreaterThan(0);
       
-      // Pattern overlay should exist (Tailwind applies this as a class, not inline style)
-      const pattern = document.querySelector('[class*="background-size:20px"]');
+      // Pattern overlay should exist (Tailwind v4 uses bg-size-[20px_20px] syntax)
+      const pattern = document.querySelector('[class*="bg-size-[20px_20px]"], [class*="background-size"]');
       expect(pattern).toBeInTheDocument();
     });
 
@@ -295,7 +295,7 @@ describe('HomePage Component', () => {
       expect(cardElements.length).toBe(3); // Three sample cards
     });
 
-    it('should have proper card styling with backdrop blur', () => {
+    it('should have proper card styling with backdrop blur-sm', () => {
       render(<HomePage />);
       
       // Main content card should have backdrop blur

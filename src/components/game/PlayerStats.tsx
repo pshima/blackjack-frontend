@@ -115,7 +115,7 @@ export default function PlayerStats({ className = '' }: PlayerStatsProps) {
     <div className={`bg-white rounded-lg shadow-md p-6 ${className}`}>
       {/* Player Header */}
       <div className="text-center mb-6">
-        <div className="w-16 h-16 bg-gradient-to-br from-primary-400 to-primary-600 rounded-full mx-auto mb-3 flex items-center justify-center">
+        <div className="w-16 h-16 bg-linear-to-br from-primary-400 to-primary-600 rounded-full mx-auto mb-3 flex items-center justify-center">
           <span className="text-2xl text-white font-bold">
             {playerState.name ? playerState.name.charAt(0).toUpperCase() : 'P'}
           </span>

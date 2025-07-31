@@ -228,7 +228,7 @@ export const GameFlowDebug: React.FC = () => {
         ) : (
           <div className="space-y-3">
             {steps.map((step) => (
-              <div key={step.id} className="bg-primary-900 p-4 rounded border">
+              <div key={step.id} className="bg-primary-900 p-4 rounded-sm border">
                 <div className="flex items-center justify-between mb-2">
                   <div className="flex items-center gap-3">
                     <span className={`text-sm font-bold ${
@@ -260,7 +260,7 @@ export const GameFlowDebug: React.FC = () => {
                     <summary className="text-primary-300 text-sm cursor-pointer">
                       View Data
                     </summary>
-                    <pre className="mt-2 text-xs bg-black p-2 rounded overflow-auto text-green-400">
+                    <pre className="mt-2 text-xs bg-black p-2 rounded-sm overflow-auto text-green-400">
                       {JSON.stringify(step.data, null, 2)}
                     </pre>
                   </details>
@@ -275,7 +275,7 @@ export const GameFlowDebug: React.FC = () => {
       {gameState && (
         <div className="bg-primary-800 rounded-lg p-6 border border-primary-600">
           <h2 className="text-xl font-semibold text-white mb-4">🎮 Final Game State</h2>
-          <pre className="text-xs bg-black p-4 rounded overflow-auto text-green-400">
+          <pre className="text-xs bg-black p-4 rounded-sm overflow-auto text-green-400">
             {JSON.stringify(gameState, null, 2)}
           </pre>
         </div>

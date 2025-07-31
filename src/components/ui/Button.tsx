@@ -15,7 +15,7 @@ const Button: React.FC<ButtonProps> = ({
   testId
 }) => {
   // Base styling that applies to all button variants
-  const baseClasses = 'font-medium rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:cursor-not-allowed';
+  const baseClasses = 'font-medium rounded-lg transition-colors duration-200 focus:outline-hidden focus:ring-2 focus:ring-offset-2 disabled:cursor-not-allowed';
   
   // Color schemes for different button types
   const variantClasses = {
