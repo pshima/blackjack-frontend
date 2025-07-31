@@ -3,7 +3,6 @@ import { cardGameApi, CardGameApiError } from '../services/cardgame-api';
 import type {
   GameStateResponse,
   Player,
-  DeckTypeOption,
 } from '../types/cardgame';
 
 // Helper function to wrap async operations with consistent error handling and loading states
@@ -41,7 +40,7 @@ export interface UseBlackjackGameState {
 }
 
 export interface UseBlackjackGameActions {
-  createNewGame: (decks?: number, type?: DeckTypeOption, maxPlayers?: number) => Promise<void>;
+  createNewGame: (decks?: number, maxPlayers?: number) => Promise<void>;
   joinGame: (gameId: string, playerName: string) => Promise<void>;
   startGame: () => Promise<void>;
   hit: () => Promise<void>;
@@ -99,15 +98,14 @@ export function useBlackjackGame(playerId?: string): UseBlackjackGameReturn {
     )();
   }, [gameId, handleError]);
 
-  // Creates a new blackjack game with specified parameters
+  // Creates a new glitchjack game with specified parameters
   const createNewGame = useCallback(async (
     decks: number = 1,
-    type: DeckTypeOption = 'standard',
     maxPlayers: number = 6
   ) => {
     await withAsyncHandling(
       async () => {
-        const response = await cardGameApi.createGame(decks, type, maxPlayers);
+        const response = await cardGameApi.createGlitchjackGame(decks, maxPlayers);
         setGameId(response.game_id);
         await refreshGameState(response.game_id);
       },
@@ -131,7 +129,7 @@ export function useBlackjackGame(playerId?: string): UseBlackjackGameReturn {
     )();
   }, [handleError, refreshGameState]);
 
-  // Starts the blackjack game after players have joined
+  // Starts the glitchjack game after players have joined
   const startGame = useCallback(async () => {
     if (!gameId) {
       setError('No game ID available');
@@ -140,7 +138,7 @@ export function useBlackjackGame(playerId?: string): UseBlackjackGameReturn {
 
     await withAsyncHandling(
       async () => {
-        await cardGameApi.startBlackjackGame(gameId);
+        await cardGameApi.startGlitchjackGame(gameId);
         await refreshGameState();
       },
       setIsLoading,
@@ -221,7 +219,7 @@ export function useBlackjackGame(playerId?: string): UseBlackjackGameReturn {
     )();
   }, [gameId, refreshGameState, handleError]);
 
-  // Resets the deck for the current game
+  // Deck reset is disabled for glitchjack games
   const resetGame = useCallback(async () => {
     if (!gameId) {
       setError('No game ID available');

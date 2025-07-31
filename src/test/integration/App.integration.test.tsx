@@ -9,7 +9,7 @@ describe('App Integration Tests', () => {
     render(<App />);
     
     // The app should render successfully, indicating ErrorBoundary is working
-    expect(screen.getByRole('heading', { name: /blackjack/i })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: /glitchjack/i })).toBeInTheDocument();
   });
 
 });

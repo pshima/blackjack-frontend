@@ -1,0 +1,103 @@
+# Docker Compose configuration for Blackjack Casino frontend
+# Production-ready deployment with security hardening
+
+services:
+  blackjack-frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        NODE_ENV: production
+        VITE_APP_VERSION: ${APP_VERSION:-1.0.0}
+        VITE_API_BASE_URL: ${API_BASE_URL:-http://glitchjack.com:8080}
+        VITE_SENTRY_DSN: ${SENTRY_DSN:-}
+        VITE_GA_TRACKING_ID: ${GA_TRACKING_ID:-}
+    
+    image: blackjack-casino/frontend:${TAG:-latest}
+    
+    container_name: blackjack-frontend
+    
+    ports:
+      - "${FRONTEND_PORT:-80}:8888"
+    
+    environment:
+      - NODE_ENV=production
+      - NGINX_WORKER_PROCESSES=auto
+      - NGINX_WORKER_CONNECTIONS=1024
+    
+    # Security context
+    security_opt:
+      - no-new-privileges:true
+    
+    # Resource limits (for regular docker-compose)
+    mem_limit: 512m
+    cpus: 1.0
+    
+    # Health check
+    healthcheck:
+      test: ["CMD", "/usr/local/bin/health-check.sh"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    
+    # Restart policy
+    restart: unless-stopped
+    
+    # Logging configuration
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    
+    # Labels for monitoring and management
+    labels:
+      - "com.blackjack-casino.service=frontend"
+      - "com.blackjack-casino.version=${TAG:-latest}"
+      - "com.blackjack-casino.team=frontend"
+      - "traefik.enable=true"
+      - "traefik.http.routers.blackjack-frontend.rule=Host(`${FRONTEND_DOMAIN:-glitchjack.com}`)"
+      - "traefik.http.routers.blackjack-frontend.tls=true"
+      - "traefik.http.services.blackjack-frontend.loadbalancer.server.port=8080"
+
+  # Optional: Traefik reverse proxy for production
+  traefik:
+    image: traefik:v3.0
+    container_name: blackjack-traefik
+    profiles:
+      - proxy
+    command:
+      - "--api.dashboard=true"
+      - "--api.insecure=false"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      - "--certificatesresolvers.letsencrypt.acme.httpchallenge=true"
+      - "--certificatesresolvers.letsencrypt.acme.httpchallenge.entrypoint=web"
+      - "--certificatesresolvers.letsencrypt.acme.email=${ACME_EMAIL:-admin@blackjack-casino.com}"
+      - "--certificatesresolvers.letsencrypt.acme.storage=/letsencrypt/acme.json"
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8080:8080"  # Traefik dashboard
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./letsencrypt:/letsencrypt
+    environment:
+      - TRAEFIK_API_DASHBOARD=true
+    restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.traefik.rule=Host(`traefik.${FRONTEND_DOMAIN:-localhost}`)"
+      - "traefik.http.routers.traefik.tls=true"
+
+networks:
+  default:
+    name: blackjack-network
+    driver: bridge
+
+volumes:
+  letsencrypt:
+    driver: local

@@ -1,4 +1,5 @@
 /// <reference types="vitest" />
+/// <reference types="node" />
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { visualizer } from 'rollup-plugin-visualizer'
@@ -12,24 +13,8 @@ export default defineConfig(({ mode }) => {
     plugins: [
       react(),
       
-      // Sentry plugin for production builds
-      ...(isProduction && process.env.VITE_SENTRY_DSN ? [
-        sentryVitePlugin({
-          org: process.env.SENTRY_ORG,
-          project: process.env.SENTRY_PROJECT,
-          authToken: process.env.SENTRY_AUTH_TOKEN,
-          telemetry: false,
-          release: {
-            name: process.env.VITE_APP_VERSION || '1.0.0',
-            setCommits: {
-              auto: true,
-            },
-          },
-          sourcemaps: {
-            assets: ['./dist/**'],
-          },
-        })
-      ] : []),
+      // Sentry plugin disabled for Docker build
+      // TODO: Configure Sentry via environment variables
       
       // Bundle analyzer for production builds
       ...(isProduction ? [
@@ -46,13 +31,14 @@ export default defineConfig(({ mode }) => {
     build: {
       target: 'es2020',
       sourcemap: isProduction,
-      minify: 'terser',
-      terserOptions: {
-        compress: {
-          drop_console: isProduction,
-          drop_debugger: isProduction,
-        },
-      },
+      minify: 'esbuild',
+      // Disable terser options for now to fix build
+      // terserOptions: {
+      //   compress: {
+      //     drop_console: isProduction,
+      //     drop_debugger: isProduction,
+      //   },
+      // },
       rollupOptions: {
         output: {
           // Code splitting strategy

@@ -1,9 +1,9 @@
 import { useState, useCallback } from 'react';
 import { cardGameApi, CardGameApiError } from '../services/cardgame-api';
-import type { BlackjackResultsResponse } from '../types/cardgame';
+import type { GlitchjackResultsResponse } from '../types/cardgame';
 
 export interface UseBlackjackResultsState {
-  results: BlackjackResultsResponse | null;
+  results: GlitchjackResultsResponse | null;
   isLoading: boolean;
   error: string | null;
 }
@@ -16,7 +16,7 @@ export interface UseBlackjackResultsActions {
 export interface UseBlackjackResultsReturn extends UseBlackjackResultsState, UseBlackjackResultsActions {}
 
 export function useBlackjackResults(): UseBlackjackResultsReturn {
-  const [results, setResults] = useState<BlackjackResultsResponse | null>(null);
+  const [results, setResults] = useState<GlitchjackResultsResponse | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -34,7 +34,7 @@ export function useBlackjackResults(): UseBlackjackResultsReturn {
     setIsLoading(true);
     setError(null);
     try {
-      const response = await cardGameApi.getBlackjackResults(gameId);
+      const response = await cardGameApi.getGlitchjackResults(gameId);
       setResults(response);
     } catch (error) {
       handleError(error);

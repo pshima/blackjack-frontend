@@ -85,7 +85,7 @@ export function MainGamePage() {
     setError(null);
     
     try {
-      const gameResponse = await cardGameApi.createGame(1, 'standard');
+      const gameResponse = await cardGameApi.createGlitchjackGame(1);
       const gameId = gameResponse.game_id;
       
       await cardGameApi.shuffleDeck(gameId);
@@ -115,7 +115,7 @@ export function MainGamePage() {
     setError(null);
     
     try {
-      await cardGameApi.startBlackjackGame(gameStatus.gameId);
+      await cardGameApi.startGlitchjackGame(gameStatus.gameId);
       const updatedGameState = await cardGameApi.getGameState(gameStatus.gameId);
       setGameState(updatedGameState);
       setGamePhase('playing');
@@ -222,7 +222,7 @@ export function MainGamePage() {
   // Fetches final game results and updates display
   const handleGameResults = async () => {
     try {
-      const results = await cardGameApi.getBlackjackResults(gameStatus!.gameId);
+      const results = await cardGameApi.getGlitchjackResults(gameStatus!.gameId);
       const finalState = await cardGameApi.getGameState(gameStatus!.gameId);
       
       if (finalState.dealer && finalState.dealer.hand) {

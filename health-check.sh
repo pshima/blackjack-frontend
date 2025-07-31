@@ -7,7 +7,7 @@ set -e
 
 # Configuration
 HOST="localhost"
-PORT="8080"
+PORT="8888"
 TIMEOUT=10
 MAX_RETRIES=3
 

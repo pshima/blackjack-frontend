@@ -46,7 +46,7 @@ export const CasinoBlackjackGame: React.FC<CasinoBlackjackGameProps> = ({ classN
     try {
       setGamePhase('creating');
       setBalance(prev => prev - currentBet);
-      await createNewGame(1, 'standard', 1);
+      await createNewGame(1, 1);
     } catch (error) {
       console.error('❌ Deal Cards failed:', error);
       setBalance(prev => prev + currentBet);
@@ -378,7 +378,7 @@ export const CasinoBlackjackGame: React.FC<CasinoBlackjackGameProps> = ({ classN
                 {results.results && results.results.players && results.results.players.length > 0 && (
                   <div className="mb-6">
                     {results.results.players.map((playerResult) => (
-                      <div key={playerResult.player_id} className="text-center">
+                      <div key={playerResult.player.id} className="text-center">
                         <div className={`text-2xl font-bold mb-2 ${
                           playerResult.result === 'win' || playerResult.result === 'blackjack' ? 'text-green-400' :
                           playerResult.result === 'push' ? 'text-yellow-400' :
@@ -390,7 +390,7 @@ export const CasinoBlackjackGame: React.FC<CasinoBlackjackGameProps> = ({ classN
                            '💔 YOU LOSE'}
                         </div>
                         <div className="text-white text-sm mb-2">
-                          Your Hand: {playerResult.hand_value} | Dealer: {results.results!.dealer.hand_value}
+                          Your Hand: {playerResult.hand_value} | Dealer: {results.results.dealer_value}
                         </div>
                         <div className="text-green-400 font-bold">
                           Balance: ${balance}

@@ -2,8 +2,6 @@ import { config } from '../config/environment';
 import type {
   ErrorResponse,
   DeckTypesResponse,
-  GameCreationResponse,
-  GameCreationWithPlayersResponse,
   GameInfoResponse,
   GameStateResponse,
   GameListResponse,
@@ -15,13 +13,13 @@ import type {
   PlayerCardResponse,
   PlayerCardWithFaceResponse,
   DiscardResponse,
-  BlackjackStartResponse,
-  BlackjackHitResponse,
-  BlackjackStandResponse,
-  BlackjackResultsResponse,
+  GlitchjackGameResponse,
+  GlitchjackStartResponse,
+  GlitchjackHitResponse,
+  GlitchjackStandResponse,
+  GlitchjackResultsResponse,
   AddPlayerRequest,
   DiscardCardRequest,
-  DeckTypeOption,
 } from '../types/cardgame';
 
 // Custom error class for API-specific errors with status codes and categorization
@@ -140,26 +138,22 @@ class CardGameApiService {
     return this.request<DeckTypesResponse>('/deck-types');
   }
 
-  // Creates a new game with specified deck count, type, and player limit
-  async createGame(
+  // Creates a new glitchjack game with specified deck count and player limit
+  async createGlitchjackGame(
     decks: number = 1,
-    type: DeckTypeOption = 'standard',
     maxPlayers?: number
-  ): Promise<GameCreationResponse | GameCreationWithPlayersResponse> {
+  ): Promise<GlitchjackGameResponse> {
     const params = [];
     
     if (decks !== 1) {
       params.push(decks);
-      if (type !== 'standard') {
-        params.push(type);
-        if (maxPlayers !== undefined) {
-          params.push(maxPlayers);
-        }
+      if (maxPlayers !== undefined) {
+        params.push(maxPlayers);
       }
     }
 
-    const endpoint = this.buildEndpoint('/game/new', ...params);
-    return this.request<GameCreationResponse | GameCreationWithPlayersResponse>(endpoint);
+    const endpoint = this.buildEndpoint('/game/new/glitchjack', ...params);
+    return this.request<GlitchjackGameResponse>(endpoint);
   }
 
   // Retrieves a list of all active games
@@ -189,14 +183,9 @@ class CardGameApiService {
     return this.request<DeckOperationResponse>(`/game/${gameId}/shuffle`);
   }
 
-  // Resets the deck with optional new configuration
-  async resetDeck(
-    gameId: string,
-    decks?: number,
-    type?: DeckTypeOption
-  ): Promise<DeckOperationResponse | DeckResetResponse> {
-    const endpoint = this.buildEndpoint(`/game/${gameId}/reset`, decks, type);
-    return this.request<DeckOperationResponse | DeckResetResponse>(endpoint);
+  // Deck reset is disabled for glitchjack games (random deck composition)
+  async resetDeck(gameId: string): Promise<never> {
+    throw new CardGameApiError(400, 'Deck reset is not supported for Glitchjack games');
   }
 
   // Adds a new player to an existing game
@@ -260,30 +249,30 @@ class CardGameApiService {
     });
   }
 
-  // Starts a blackjack game and deals initial cards to all players
-  async startBlackjackGame(gameId: string): Promise<BlackjackStartResponse> {
-    return this.request<BlackjackStartResponse>(`/game/${gameId}/start`, {
+  // Starts a glitchjack game and deals initial cards to all players
+  async startGlitchjackGame(gameId: string): Promise<GlitchjackStartResponse> {
+    return this.request<GlitchjackStartResponse>(`/game/${gameId}/glitchjack/start`, {
       method: 'POST',
     });
   }
 
-  // Player takes another card in blackjack
-  async hit(gameId: string, playerId: string): Promise<BlackjackHitResponse> {
-    return this.request<BlackjackHitResponse>(`/game/${gameId}/hit/${playerId}`, {
+  // Player takes another card in glitchjack
+  async hit(gameId: string, playerId: string): Promise<GlitchjackHitResponse> {
+    return this.request<GlitchjackHitResponse>(`/game/${gameId}/glitchjack/hit/${playerId}`, {
       method: 'POST',
     });
   }
 
-  // Player stands with their current hand in blackjack
-  async stand(gameId: string, playerId: string): Promise<BlackjackStandResponse> {
-    return this.request<BlackjackStandResponse>(`/game/${gameId}/stand/${playerId}`, {
+  // Player stands with their current hand in glitchjack
+  async stand(gameId: string, playerId: string): Promise<GlitchjackStandResponse> {
+    return this.request<GlitchjackStandResponse>(`/game/${gameId}/glitchjack/stand/${playerId}`, {
       method: 'POST',
     });
   }
 
-  // Retrieves the final results of a completed blackjack game
-  async getBlackjackResults(gameId: string): Promise<BlackjackResultsResponse> {
-    return this.request<BlackjackResultsResponse>(`/game/${gameId}/results`);
+  // Retrieves the final results of a completed glitchjack game
+  async getGlitchjackResults(gameId: string): Promise<GlitchjackResultsResponse> {
+    return this.request<GlitchjackResultsResponse>(`/game/${gameId}/glitchjack/results`);
   }
 }
 

@@ -197,6 +197,66 @@ export interface BlackjackResultsResponse {
   results: Record<string, BlackjackResult>;
 }
 
+// Glitchjack-specific types based on OpenAPI spec
+export interface PlayerWithCards extends Player {
+  // This is the same as Player but ensures we have the hand field populated
+}
+
+export interface GlitchjackGameResponse {
+  game_id: string;
+  game_type: 'Glitchjack';
+  deck_name: string;
+  message: string;
+  remaining_cards: number;
+  max_players: number;
+  num_decks?: number;
+  created: string;
+}
+
+export interface GlitchjackStartResponse {
+  game_id: string;
+  game_type: 'Glitchjack';
+  status: 'in_progress';
+  current_player: number;
+  message: string;
+  remaining_cards: number;
+  players: PlayerWithCards[];
+  dealer: PlayerWithCards;
+}
+
+export interface GlitchjackHitResponse {
+  game_id: string;
+  player: PlayerWithCards;
+  hand_value: number;
+  busted: boolean;
+  current_player: number;
+  game_status: 'in_progress' | 'finished';
+  message: string;
+  dealer?: PlayerWithCards;
+}
+
+export interface GlitchjackStandResponse {
+  game_id: string;
+  player_id: string;
+  message: string;
+  current_player: number;
+  game_status: 'in_progress' | 'finished';
+  dealer?: PlayerWithCards;
+}
+
+export interface GlitchjackResultsResponse {
+  game_id: string;
+  game_type: 'Glitchjack';
+  status: 'finished';
+  dealer: PlayerWithCards;
+  dealer_value: number;
+  players: {
+    player: PlayerWithCards;
+    hand_value: number;
+    result: BlackjackResult;
+  }[];
+}
+
 // Request interfaces
 export interface AddPlayerRequest {
   name: string;

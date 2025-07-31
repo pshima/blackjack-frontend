@@ -72,6 +72,7 @@ class ApiService {
       'Content-Type': 'application/json',
       'X-API-Version': '1.0',
       'X-Client-Version': config.appVersion,
+      'X-Requested-With': 'XMLHttpRequest',
       ...options.headers,
     };
     

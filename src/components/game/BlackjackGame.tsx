@@ -47,7 +47,7 @@ export const BlackjackGame: React.FC<BlackjackGameProps> = ({ className = '' }) 
   const handleNewGame = async () => {
     try {
       setBalance(prev => prev - currentBet); // Deduct bet from balance
-      await createNewGame(1, 'standard', 1); // Single deck, standard cards, 1 player max
+      await createNewGame(1, 1); // Single deck, 1 player max
     } catch (error) {
       setBalance(prev => prev + currentBet); // Refund bet on error
       console.error('Failed to create new game:', error);
@@ -193,12 +193,12 @@ export const BlackjackGame: React.FC<BlackjackGameProps> = ({ className = '' }) 
       </div>
 
       {/* Game Results */}
-      {results.results && (
+      {results.results && results.results.players && results.results.players.length > 0 && (
         <div className="mt-6 text-center">
           <div className="bg-primary-800 rounded-lg p-6 border border-primary-600 max-w-md mx-auto">
             <h3 className="text-xl font-bold text-white mb-4">Game Results</h3>
             {results.results.players.map((playerResult) => (
-              <div key={playerResult.player_id} className="text-primary-200">
+              <div key={playerResult.player.id} className="text-primary-200">
                 <p className="mb-2">
                   <span className="capitalize font-semibold text-white">
                     {playerResult.result}
@@ -206,7 +206,7 @@ export const BlackjackGame: React.FC<BlackjackGameProps> = ({ className = '' }) 
                 </p>
                 <p className="text-sm">
                   Your Hand: {playerResult.hand_value} | 
-                  Dealer Hand: {results.results!.dealer.hand_value}
+                  Dealer Hand: {results.results.dealer_value}
                 </p>
                 <p className="text-sm mt-2 text-green-400">
                   Current Balance: ${balance}

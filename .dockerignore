@@ -62,8 +62,7 @@ cypress.config.js
 .prettierrc*
 .editorconfig
 
-# Package manager files
-package-lock.json
+# Package manager files (keep package-lock.json for Docker builds)
 yarn.lock
 pnpm-lock.yaml
 
