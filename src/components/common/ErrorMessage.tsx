@@ -17,7 +17,7 @@ const ErrorMessage: React.FC<ErrorProps> = ({
   // Different visual styles for different contexts (inline text, card layout, alert banner)
   const variantClasses = {
     inline: 'text-red-600 text-sm p-2',
-    card: 'bg-red-50 border border-red-200 rounded-lg p-4',
+    card: 'bg-red-50 border border-red-200 p-4 border-2 border-red-400',
     alert: 'bg-red-100 border-l-4 border-red-500 p-4'
   };
 
@@ -57,7 +57,7 @@ const ErrorMessage: React.FC<ErrorProps> = ({
               <summary className="text-xs text-red-600 cursor-pointer hover:text-red-800">
                 Show technical details
               </summary>
-              <pre className="mt-2 text-xs text-red-600 bg-red-100 p-2 rounded-sm overflow-x-auto">
+              <pre className="mt-2 text-xs text-red-600 bg-red-100 p-2 overflow-x-auto border border-red-300">
                 {errorDetails}
               </pre>
             </details>
@@ -68,7 +68,7 @@ const ErrorMessage: React.FC<ErrorProps> = ({
               <button
                 type="button"
                 onClick={retry}
-                className="bg-red-600 text-white px-3 py-1 text-sm rounded-sm hover:bg-red-700 focus:outline-hidden focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
+                className="bg-red-600 text-white px-3 py-1 text-sm hover:bg-red-700 focus:outline-hidden focus:ring-2 focus:ring-red-500 focus:ring-offset-2 border-2 border-black"
                 aria-label="Try again"
               >
                 Try Again

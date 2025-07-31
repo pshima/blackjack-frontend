@@ -35,7 +35,7 @@ const HomePage: React.FC = () => {
       <div className="relative min-h-screen flex items-center justify-center p-4">
         <div className="text-center max-w-4xl mx-auto">
           {/* Main card */}
-          <div className="bg-white/95 backdrop-blur-sm rounded-2xl shadow-2xl p-8 md:p-12 mb-8">
+          <div className="bg-white/95 backdrop-blur-sm shadow-2xl p-8 md:p-12 mb-8 border-4 border-black">
             <div className="mb-8">
               <h1 className="text-5xl md:text-6xl font-bold text-casino-black mb-4 font-casino">
                 Blackjack
@@ -73,7 +73,7 @@ const HomePage: React.FC = () => {
             {/* Feature demonstration */}
             <div className="grid md:grid-cols-2 gap-6 mb-8">
               {/* Loading demo */}
-              <div className="p-4 bg-gray-50 rounded-lg">
+              <div className="p-4 bg-gray-50 border-2 border-gray-300">
                 <h3 className="font-semibold text-gray-700 mb-3">Loading States</h3>
                 <Button 
                   onClick={handleStartDemo}
@@ -91,7 +91,7 @@ const HomePage: React.FC = () => {
               </div>
 
               {/* Error demo */}
-              <div className="p-4 bg-gray-50 rounded-lg">
+              <div className="p-4 bg-gray-50 border-2 border-gray-300">
                 <h3 className="font-semibold text-gray-700 mb-3">Error Handling</h3>
                 <Button 
                   onClick={handleShowError}

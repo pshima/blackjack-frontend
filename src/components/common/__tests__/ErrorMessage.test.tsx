@@ -24,7 +24,7 @@ describe('ErrorMessage Component', () => {
       render(<ErrorMessage error="Test error" testId="error-message" />);
       
       const container = screen.getByTestId('error-message');
-      expect(container).toHaveClass('bg-red-50', 'border', 'border-red-200', 'rounded-lg', 'p-4');
+      expect(container).toHaveClass('bg-red-50', 'border', 'border-red-200', 'p-4', 'border-2', 'border-red-400');
     });
 
     it('should apply inline variant styles', () => {
@@ -79,7 +79,8 @@ describe('ErrorMessage Component', () => {
         'px-3',
         'py-1',
         'text-sm',
-        'rounded-sm',
+        'border-2',
+        'border-black',
         'hover:bg-red-700',
         'focus:outline-hidden',
         'focus:ring-2',

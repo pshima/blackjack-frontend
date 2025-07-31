@@ -34,8 +34,9 @@
   --color-chip-purple: #8b5cf6;
   --color-chip-orange: #f97316;
 
-  --font-casino: Georgia, Times New Roman, serif;
-  --font-card: Monaco, Menlo, monospace;
+  --font-casino: 'Press Start 2P', Georgia, Times New Roman, serif;
+  --font-card: 'Press Start 2P', Monaco, Menlo, monospace;
+  --font-pixel: 'Press Start 2P', monospace;
 
   --animate-card-deal: cardDeal 0.5s ease-out;
   --animate-card-flip: cardFlip 0.3s ease-in-out;
@@ -145,9 +146,13 @@
 
 body {
   margin: 0;
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Press Start 2P', system-ui, Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /* NES-style pixelated rendering */
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
 }
 
 /* Blackjack Game Animations */

@@ -47,7 +47,7 @@ export class ErrorBoundary extends Component<Props, State> {
 
       // Default error UI with error details and retry button
       return (
-        <div className="error-boundary bg-red-50 border border-red-200 rounded-lg p-6 m-4">
+        <div className="error-boundary bg-red-50 border border-red-200 p-6 m-4 border-2 border-red-400">
           <h2 className="text-lg font-semibold text-red-800 mb-2">
             ⚠️ Error in {this.props.componentName || 'Component'}
           </h2>
@@ -55,7 +55,7 @@ export class ErrorBoundary extends Component<Props, State> {
             <summary className="cursor-pointer text-red-700 font-medium mb-2">
               {this.state.error?.message || 'Unknown error occurred'}
             </summary>
-            <div className="bg-red-100 p-3 rounded-sm mt-2 overflow-auto">
+            <div className="bg-red-100 p-3 mt-2 overflow-auto border border-red-300">
               <p className="font-mono text-xs text-red-800 mb-2">
                 <strong>Error:</strong> {this.state.error?.toString()}
               </p>
@@ -70,7 +70,7 @@ export class ErrorBoundary extends Component<Props, State> {
           {/* Reset error state and attempt to re-render the component tree */}
           <button
             onClick={() => this.setState({ hasError: false, error: undefined, errorInfo: undefined })}
-            className="mt-3 bg-red-600 text-white px-4 py-2 rounded-sm text-sm hover:bg-red-700"
+            className="mt-3 bg-red-600 text-white px-4 py-2 text-sm hover:bg-red-700 border-2 border-black"
           >
             Try Again
           </button>

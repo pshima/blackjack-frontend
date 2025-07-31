@@ -11,13 +11,13 @@ export function StartGameButton({ onStartGame, isLoading, error }: StartGameButt
       <button
         onClick={onStartGame}
         disabled={isLoading}
-        className="px-6 py-3 rounded-sm text-white font-semibold cursor-pointer transition-all min-w-32 bg-primary-700 hover:bg-primary-600 hover:-translate-y-0.5 hover:shadow-lg disabled:bg-gray-600 disabled:cursor-not-allowed disabled:hover:transform-none disabled:hover:shadow-xs shadow-md"
+        className="px-6 py-3 text-white font-semibold cursor-pointer transition-all min-w-32 bg-primary-700 hover:bg-primary-600 hover:-translate-y-0.5 hover:shadow-lg disabled:bg-gray-600 disabled:cursor-not-allowed disabled:hover:transform-none disabled:hover:shadow-xs shadow-md border-2 border-black"
       >
         {isLoading ? 'Starting Game...' : 'Start Game'}
       </button>
       
       {error && (
-        <div className="bg-red-500 text-white px-4 py-2 rounded-sm font-mono">
+        <div className="bg-red-500 text-white px-4 py-2 font-mono border-2 border-black">
           Error: {error}
         </div>
       )}

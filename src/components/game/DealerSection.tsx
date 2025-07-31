@@ -106,14 +106,14 @@ export function DealerSection({
                   alt={card.face_up || gamePhase === 'dealer-turn' || gamePhase === 'finished' 
                     ? `${card.rank} of ${card.suit}` 
                     : 'Card back'}
-                  className="w-16 h-24 rounded-sm shadow-lg"
+                  className="w-16 h-24 shadow-lg border-2 border-black"
                   style={{ backgroundColor: 'white' }}
                 />
               </div>
             ))
           ) : (
             <div 
-              className="w-16 h-24 rounded-sm border-2 border-dashed border-gray-400 flex items-center justify-center text-gray-400 text-xs"
+              className="w-16 h-24 border-2 border-dashed border-gray-400 flex items-center justify-center text-gray-400 text-xs"
               style={{ backgroundColor: 'rgba(255, 255, 255, 0.1)' }}
             >
               Cards

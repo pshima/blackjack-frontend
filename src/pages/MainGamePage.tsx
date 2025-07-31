@@ -276,11 +276,13 @@ export function MainGamePage() {
         ) : (
           <div className="w-full max-w-6xl mx-auto px-4">
             <div 
-              className="rounded-lg p-8 mb-8 relative"
+              className="p-8 mb-8 relative"
               style={{
                 backgroundColor: '#AB6B29',
                 border: '3px solid #4A4744',
-                minHeight: '400px'
+                minHeight: '400px',
+                backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(0,0,0,0.1) 1px, transparent 0)',
+                backgroundSize: '8px 8px'
               }}
             >
               <GameOverlay showBusted={showBusted} gameResult={gameResult} />

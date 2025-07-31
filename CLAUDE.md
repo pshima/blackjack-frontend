@@ -165,3 +165,4 @@ API base URL is configured via `VITE_API_BASE_URL` environment variable (default
 - **Debugging**: Use debug components for development and testing
 - **Styling**: Follow the established green casino theme and animation patterns
 -- **Tailwind**: Always use Tailwind 4.x syntax
+-- **Design**: Try to stick to the style of a 1980s NES game, graphics only, do not try and turn the application into an NES.
