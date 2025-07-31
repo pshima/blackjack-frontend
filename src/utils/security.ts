@@ -119,7 +119,6 @@ function isValidNavigation(url: string): boolean {
     
     // Block suspicious paths
     const suspiciousPaths = [
-      '/admin',
       '/config',
       '/debug',
       '/.env',

@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a fully-featured React + TypeScript blackjack casino frontend application, built with Vite and styled with Tailwind CSS. The application includes complete blackjack gameplay, comprehensive debugging tools, API integration for backend connectivity, and production-ready features with security best practices.
+This is a fully-featured React + TypeScript blackjack casino frontend application, built with Vite and styled with Tailwind CSS. The application includes complete blackjack gameplay, API integration for backend connectivity, and production-ready features with security best practices.
 
 ## Tech Stack
 
@@ -13,7 +13,6 @@ This is a fully-featured React + TypeScript blackjack casino frontend applicatio
 - **Styling**: Tailwind CSS with custom green casino theme and animations
 - **Package Manager**: npm
 - **API Client**: Custom service layer with type safety
-- **Development Tools**: Comprehensive debugging and testing components
 
 ## Project Structure
 
@@ -22,27 +21,19 @@ src/
 ├── components/
 │   ├── game/               # Complete blackjack game components
 │   │   ├── BlackjackGame.tsx        # Main game component
-│   │   ├── BlackjackGameFixed.tsx   # Optimized game version
 │   │   ├── Card.tsx                 # Animated card component
 │   │   ├── Hand.tsx                 # Player/dealer hand display
 │   │   ├── BettingControls.tsx      # Betting interface
 │   │   ├── BlackjackControls.tsx    # Game action buttons
 │   │   ├── GameResult.tsx           # Win/loss display
 │   │   └── GameTable.tsx            # Game table layout
-│   ├── debug/              # Development and testing tools
-│   │   ├── TestComponents.tsx       # Component testing utilities
-│   │   ├── BlackjackWorkflowTest.tsx # Game workflow testing
-│   │   ├── BlackjackGameDebug.tsx   # Game state debugging
-│   │   ├── ApiConnectionDebug.tsx   # API testing tools
-│   │   └── ...                      # Additional debug components
 │   └── ErrorBoundary.tsx   # Error handling wrapper
 ├── hooks/                  # Custom React hooks
 │   ├── useBlackjackGame.ts          # Main game logic hook
 │   ├── useBlackjackResults.ts       # Game results management
 │   ├── useGameList.ts               # Game list management
 │   └── useDeckTypes.ts              # Deck configuration
-├── pages/
-│   └── ApiTestPage.tsx              # API testing page
+├── pages/                  # Application pages
 ├── services/
 │   └── cardgame-api.ts              # Blackjack API service layer
 ├── types/
@@ -67,15 +58,9 @@ src/
 
 ## Application Navigation
 
-The app includes a comprehensive navigation system with multiple modes:
+The app includes a simple navigation system:
 
-- **🏠 Home** - Welcome page and overview
-- **🃏 Blackjack Game** - Main production blackjack gameplay
-- **🧪 Blackjack Test** - Workflow and integration testing
-- **🔧 Debug Fix** - Development debugging and state monitoring
-- **✅ Fixed Test** - Final integration and validation tests
-- **🔌 API Test** - API connectivity and endpoint testing
-- **🛠️ API Tools** - Advanced API debugging utilities
+- **🏠 Home** - Main blackjack gameplay
 
 ## Game Features
 
@@ -87,12 +72,8 @@ The app includes a comprehensive navigation system with multiple modes:
 - **Animated UI**: Smooth card dealing, flipping, and game transitions
 - **Responsive Design**: Optimized for desktop and mobile devices
 
-### Development Features
-- **Debug Mode**: Real-time game state inspection and manipulation
-- **API Testing**: Comprehensive backend connectivity validation
+### Production Features
 - **Error Boundaries**: Robust error handling with recovery options
-- **Component Testing**: Individual component validation and testing
-- **State Monitoring**: Live game state visualization and debugging
 
 ## API Integration
 

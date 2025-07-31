@@ -319,14 +319,6 @@ export function MainGamePage() {
           </div>
         )}
 
-        <div className="fixed bottom-4 right-4">
-          <a
-            href="/admin"
-            className="opacity-10 hover:opacity-100 transition-opacity duration-300 text-xs text-gray-300 hover:text-white"
-          >
-            🔧
-          </a>
-        </div>
       </div>
     </div>
   );

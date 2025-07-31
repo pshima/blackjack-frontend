@@ -7,7 +7,6 @@ import type {
 } from '../types/blackjack';
 import { config } from '../config/environment';
 import { logger } from './monitoring';
-import { authService } from './auth';
 import { validateGameId, validationSchemas, createValidationMiddleware } from '../utils/validation';
 
 export class ApiError extends Error {
@@ -68,16 +67,16 @@ class ApiService {
     const method = options.method || 'GET';
     const startTime = performance.now();
     
-    // Add authentication and security headers
-    const securityHeaders = await authService.addAuthHeaders({
+    // Add headers
+    const headers = {
       'Content-Type': 'application/json',
       'X-API-Version': '1.0',
       'X-Client-Version': config.appVersion,
       ...options.headers,
-    });
+    };
     
     const requestConfig: RequestInit = {
-      headers: securityHeaders,
+      headers,
       signal: AbortSignal.timeout(this.timeout),
       ...options,
     };
