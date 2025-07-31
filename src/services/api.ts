@@ -6,9 +6,9 @@ import type {
   Player 
 } from '../types/blackjack';
 import { config } from '../config/environment';
-import { logger, performanceMonitor } from './monitoring';
+import { logger } from './monitoring';
 import { authService } from './auth';
-import { validateGameId, validatePlayerId, validationSchemas, createValidationMiddleware } from '../utils/validation';
+import { validateGameId, validationSchemas, createValidationMiddleware } from '../utils/validation';
 
 export class ApiError extends Error {
   public status: number;
@@ -164,14 +164,14 @@ class ApiService {
     return this.request<T>(endpoint, { method: 'GET' });
   }
 
-  async post<T>(endpoint: string, data: any): Promise<T> {
+  async post<T>(endpoint: string, data: unknown): Promise<T> {
     return this.request<T>(endpoint, {
       method: 'POST',
       body: JSON.stringify(data),
     });
   }
 
-  async put<T>(endpoint: string, data: any): Promise<T> {
+  async put<T>(endpoint: string, data: unknown): Promise<T> {
     return this.request<T>(endpoint, {
       method: 'PUT',
       body: JSON.stringify(data),

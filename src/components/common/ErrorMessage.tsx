@@ -1,6 +1,7 @@
 import React from 'react';
 import type { ErrorProps } from '../types';
 
+// Error display component with multiple styling variants and optional retry functionality
 const ErrorMessage: React.FC<ErrorProps> = ({
   error,
   retry,
@@ -9,9 +10,11 @@ const ErrorMessage: React.FC<ErrorProps> = ({
   className = '',
   testId
 }) => {
+  // Extract message and stack trace from Error objects or use string directly
   const errorMessage = error instanceof Error ? error.message : error;
   const errorDetails = error instanceof Error ? error.stack : undefined;
 
+  // Different visual styles for different contexts (inline text, card layout, alert banner)
   const variantClasses = {
     inline: 'text-red-600 text-sm p-2',
     card: 'bg-red-50 border border-red-200 rounded-lg p-4',
@@ -26,6 +29,7 @@ const ErrorMessage: React.FC<ErrorProps> = ({
       aria-live="assertive"
     >
       <div className="flex items-start">
+        {/* Error icon to visually indicate something went wrong */}
         <div className="flex-shrink-0">
           <svg 
             className="w-5 h-5 text-red-400" 
@@ -47,6 +51,7 @@ const ErrorMessage: React.FC<ErrorProps> = ({
           <p className="mt-1 text-sm text-red-700">
             {errorMessage}
           </p>
+          {/* Collapsible technical error details for debugging */}
           {showDetails && errorDetails && (
             <details className="mt-2">
               <summary className="text-xs text-red-600 cursor-pointer hover:text-red-800">
@@ -57,6 +62,7 @@ const ErrorMessage: React.FC<ErrorProps> = ({
               </pre>
             </details>
           )}
+          {/* Optional retry button to attempt the failed operation again */}
           {retry && (
             <div className="mt-3">
               <button

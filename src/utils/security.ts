@@ -1,7 +1,5 @@
-/**
- * Security Utilities and Hardening Features
- * Client-side security enforcement and monitoring
- */
+// Security utilities for client-side protection and monitoring
+// Provides XSS prevention, CSP monitoring, and general security hardening
 
 import { logger } from '../services/monitoring';
 import { config, isProduction } from '../config/environment';
@@ -10,15 +8,13 @@ export interface SecurityViolation {
   type: 'csp' | 'xss' | 'clickjacking' | 'navigation' | 'input';
   severity: 'low' | 'medium' | 'high' | 'critical';
   message: string;
-  details?: any;
+  details?: unknown;
   timestamp: string;
   userAgent: string;
   url: string;
 }
 
-/**
- * Initialize security features
- */
+// Sets up all client-side security features and monitoring
 export function initializeSecurity(): void {
   setupCSPViolationReporting();
   enforceHTTPS();
@@ -34,9 +30,7 @@ export function initializeSecurity(): void {
   logger.info('Security features initialized');
 }
 
-/**
- * Content Security Policy violation reporting
- */
+// Monitors and reports Content Security Policy violations
 function setupCSPViolationReporting(): void {
   document.addEventListener('securitypolicyviolation', (event) => {
     const violation: SecurityViolation = {
@@ -60,9 +54,7 @@ function setupCSPViolationReporting(): void {
   });
 }
 
-/**
- * Enforce HTTPS in production
- */
+// Redirects HTTP traffic to HTTPS in production environments
 function enforceHTTPS(): void {
   if (config.enableHttpsRedirect && window.location.protocol === 'http:') {
     const httpsUrl = window.location.href.replace('http:', 'https:');
@@ -75,56 +67,42 @@ function enforceHTTPS(): void {
   }
 }
 
-/**
- * Setup navigation guards for suspicious activity
- */
-function setupNavigationGuards(): void {
-  // Monitor for suspicious redirects
-  const originalReplaceState = history.replaceState;
-  const originalPushState = history.pushState;
-  
-  history.replaceState = function(data, title, url) {
-    if (url && !isValidNavigation(url)) {
-      const violation: SecurityViolation = {
-        type: 'navigation',
-        severity: 'medium',
-        message: 'Suspicious navigation attempt blocked',
-        details: { url, method: 'replaceState' },
-        timestamp: new Date().toISOString(),
-        userAgent: navigator.userAgent,
-        url: window.location.href,
-      };
-      
-      reportSecurityViolation(violation);
-      return;
-    }
-    
-    return originalReplaceState.apply(this, arguments as any);
-  };
-  
-  history.pushState = function(data, title, url) {
-    if (url && !isValidNavigation(url)) {
-      const violation: SecurityViolation = {
-        type: 'navigation',
-        severity: 'medium',
-        message: 'Suspicious navigation attempt blocked',
-        details: { url, method: 'pushState' },
-        timestamp: new Date().toISOString(),
-        userAgent: navigator.userAgent,
-        url: window.location.href,
-      };
-      
-      reportSecurityViolation(violation);
-      return;
-    }
-    
-    return originalPushState.apply(this, arguments as any);
+// Creates a security violation object for navigation attempts
+function createNavigationViolation(url: string, method: string): SecurityViolation {
+  return {
+    type: 'navigation',
+    severity: 'medium',
+    message: 'Suspicious navigation attempt blocked',
+    details: { url, method },
+    timestamp: new Date().toISOString(),
+    userAgent: navigator.userAgent,
+    url: window.location.href,
   };
 }
 
-/**
- * Validate navigation URLs
- */
+// Wraps a history method to validate navigation before allowing it
+function wrapHistoryMethod(originalMethod: Function, methodName: string) {
+  return function(...args: unknown[]) {
+    const [, , url] = args;
+    if (url && !isValidNavigation(url as string)) {
+      const violation = createNavigationViolation(url as string, methodName);
+      reportSecurityViolation(violation);
+      return;
+    }
+    return originalMethod.apply(this, args);
+  };
+}
+
+// Monitors browser navigation for suspicious URL patterns
+function setupNavigationGuards(): void {
+  const originalReplaceState = history.replaceState;
+  const originalPushState = history.pushState;
+  
+  history.replaceState = wrapHistoryMethod(originalReplaceState, 'replaceState');
+  history.pushState = wrapHistoryMethod(originalPushState, 'pushState');
+}
+
+// Validates navigation URLs to prevent malicious redirects
 function isValidNavigation(url: string): boolean {
   try {
     const parsedUrl = new URL(url, window.location.origin);
@@ -159,9 +137,7 @@ function isValidNavigation(url: string): boolean {
   }
 }
 
-/**
- * Input sanitization utilities
- */
+// Monitors form inputs for XSS attempts and sanitizes dangerous content
 function setupInputSanitization(): void {
   // Monitor for XSS attempts in form inputs
   document.addEventListener('input', (event) => {
@@ -192,9 +168,7 @@ function setupInputSanitization(): void {
   });
 }
 
-/**
- * Detect potential XSS attempts
- */
+// Scans input text for common XSS attack patterns
 function detectXSSAttempts(input: string): string[] {
   const xssPatterns = [
     /<script[^>]*>.*?<\/script>/gi,
@@ -221,9 +195,7 @@ function detectXSSAttempts(input: string): string[] {
   return violations;
 }
 
-/**
- * Sanitize user input
- */
+// Removes dangerous XSS patterns from user input
 export function sanitizeInput(input: string): string {
   return input
     .replace(/<script[^>]*>.*?<\/script>/gi, '')
@@ -238,9 +210,7 @@ export function sanitizeInput(input: string): string {
     .replace(/expression\s*\(/gi, '');
 }
 
-/**
- * Setup clickjacking protection
- */
+// Detects and prevents clickjacking attacks via iframe embedding
 function setupClickjackingProtection(): void {
   // Check if we're in an iframe
   if (window.parent !== window) {
@@ -266,9 +236,7 @@ function setupClickjackingProtection(): void {
   }
 }
 
-/**
- * Disable developer tools in production
- */
+// Prevents access to developer tools in production environments
 function disableDevTools(): void {
   // Detect if developer tools are open
   const devtools = { open: false, orientation: null };
@@ -343,9 +311,7 @@ function disableDevTools(): void {
   });
 }
 
-/**
- * Setup additional security headers via JavaScript
- */
+// Adds security-related meta tags to the document head
 function setupSecurityHeaders(): void {
   // Add additional security meta tags if not present
   const securityMetas = [
@@ -366,9 +332,7 @@ function setupSecurityHeaders(): void {
   });
 }
 
-/**
- * Report security violations
- */
+// Logs security violations and optionally reports them to the server
 function reportSecurityViolation(violation: SecurityViolation): void {
   logger.error(`Security violation: ${violation.message}`, undefined, {
     metadata: violation
@@ -388,9 +352,7 @@ function reportSecurityViolation(violation: SecurityViolation): void {
   }
 }
 
-/**
- * Rate limiting for client-side requests
- */
+// Client-side rate limiting to prevent request spam and abuse
 export class RateLimiter {
   private requests: Map<string, number[]> = new Map();
   private readonly maxRequests: number;
@@ -401,9 +363,7 @@ export class RateLimiter {
     this.timeWindow = timeWindow;
   }
   
-  /**
-   * Check if request is allowed
-   */
+  // Checks if a request is within rate limits for the given key
   isAllowed(key: string = 'default'): boolean {
     const now = Date.now();
     const requests = this.requests.get(key) || [];
@@ -438,9 +398,7 @@ export class RateLimiter {
     return true;
   }
   
-  /**
-   * Get remaining requests for a key
-   */
+  // Returns the number of remaining requests allowed for the given key
   getRemainingRequests(key: string = 'default'): number {
     const now = Date.now();
     const requests = this.requests.get(key) || [];

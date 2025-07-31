@@ -164,3 +164,4 @@ API base URL is configured via `VITE_API_BASE_URL` environment variable (default
 - **Error Handling**: Wrap components in `ErrorBoundary` for robust error recovery
 - **Debugging**: Use debug components for development and testing
 - **Styling**: Follow the established green casino theme and animation patterns
+-- **Tailwind**: Always use Tailwind 4.x syntax

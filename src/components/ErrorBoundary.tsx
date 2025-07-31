@@ -12,12 +12,14 @@ interface State {
   errorInfo?: string;
 }
 
+// React error boundary component that catches JavaScript errors in child components and displays fallback UI
 export class ErrorBoundary extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = { hasError: false };
   }
 
+  // Static method called when an error is thrown, updates state to trigger error UI
   static getDerivedStateFromError(error: Error): State {
     return {
       hasError: true,
@@ -25,6 +27,7 @@ export class ErrorBoundary extends Component<Props, State> {
     };
   }
 
+  // Lifecycle method called after an error is caught, logs error details for debugging
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
     console.error(`Error in ${this.props.componentName || 'Component'}:`, error);
     console.error('Error info:', errorInfo);
@@ -34,12 +37,15 @@ export class ErrorBoundary extends Component<Props, State> {
     });
   }
 
+  // Renders either the error UI when there's an error, or the normal children components
   render() {
     if (this.state.hasError) {
+      // Use custom fallback UI if provided
       if (this.props.fallback) {
         return this.props.fallback;
       }
 
+      // Default error UI with error details and retry button
       return (
         <div className="error-boundary bg-red-50 border border-red-200 rounded-lg p-6 m-4">
           <h2 className="text-lg font-semibold text-red-800 mb-2">
@@ -61,6 +67,7 @@ export class ErrorBoundary extends Component<Props, State> {
               )}
             </div>
           </details>
+          {/* Reset error state and attempt to re-render the component tree */}
           <button
             onClick={() => this.setState({ hasError: false, error: undefined, errorInfo: undefined })}
             className="mt-3 bg-red-600 text-white px-4 py-2 rounded text-sm hover:bg-red-700"
@@ -71,6 +78,7 @@ export class ErrorBoundary extends Component<Props, State> {
       );
     }
 
+    // No error, render children normally
     return this.props.children;
   }
 }

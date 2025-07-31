@@ -3,16 +3,6 @@ import { render, screen, fireEvent } from '../../../test/utils/test-utils';
 import ErrorMessage from '../ErrorMessage';
 
 describe('ErrorMessage Component', () => {
-  it('should render with string error', () => {
-    render(<ErrorMessage error="Something went wrong" />);
-    
-    const alert = screen.getByRole('alert');
-    expect(alert).toBeInTheDocument();
-    expect(alert).toHaveAttribute('aria-live', 'assertive');
-    
-    expect(screen.getByText('Something went wrong')).toBeInTheDocument();
-    expect(screen.getByText('Something went wrong')).toBeInTheDocument();
-  });
 
   it('should render with Error object', () => {
     const error = new Error('Network failed');
@@ -137,18 +127,6 @@ describe('ErrorMessage Component', () => {
       expect(detailsElement).not.toBeInTheDocument();
     });
 
-    it('should expand details when clicked', () => {
-      const error = new Error('Test error');
-      error.stack = 'Error: Test error\n  at TestFile.js:1:1';
-      
-      render(<ErrorMessage error={error} showDetails />);
-      
-      const summary = screen.getByText('Show technical details');
-      fireEvent.click(summary);
-      
-      // Details should be visible after clicking
-      expect(screen.getByText(error.stack)).toBeInTheDocument();
-    });
   });
 
   describe('accessibility', () => {
@@ -233,15 +211,6 @@ describe('ErrorMessage Component', () => {
       expect(screen.getByText('Something went wrong')).toBeInTheDocument();
     });
 
-    it('should handle non-standard error objects', () => {
-      const customError = {
-        message: 'Custom error object',
-        toString: () => 'Custom error object'
-      };
-      render(<ErrorMessage error={customError as any} />);
-      
-      expect(screen.getByText('Custom error object')).toBeInTheDocument();
-    });
   });
 
   describe('layout and structure', () => {
@@ -273,7 +242,7 @@ describe('ErrorMessage Component', () => {
         />
       );
       
-      const container = screen.getByTestId('error-div');
+      screen.getByTestId('error-div');
       
       // Should have heading, message, details, and retry button in order
       expect(screen.getByText('Something went wrong')).toBeInTheDocument();

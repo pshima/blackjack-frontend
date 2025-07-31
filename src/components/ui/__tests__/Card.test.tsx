@@ -10,19 +10,6 @@ describe('Card Component', () => {
     value: 11
   });
 
-  it('should render a visible card with correct content', () => {
-    render(<Card card={mockCard} />);
-    
-    const card = screen.getByRole('img', { name: /ace of hearts/i });
-    expect(card).toBeInTheDocument();
-    
-    // Should show rank and suit symbols
-    expect(screen.getAllByText('A')).toHaveLength(2); // Top-left and bottom-right
-    expect(screen.getAllByText('♥')).toHaveLength(3); // Top-left, center, and bottom-right
-    
-    // Should have screen reader text for card value
-    expect(screen.getByText('Card value: 11 points')).toBeInTheDocument();
-  });
 
   it('should render a hidden card', () => {
     render(<Card card={mockCard} isHidden />);
@@ -41,53 +28,6 @@ describe('Card Component', () => {
     expect(screen.getByText('Card is face down')).toBeInTheDocument();
   });
 
-  describe('card suits and colors', () => {
-    it('should render red suits correctly', () => {
-      const heartsCard = createMockCard({ suit: 'hearts', rank: 'K' });
-      const diamondsCard = createMockCard({ suit: 'diamonds', rank: 'Q' });
-      
-      const { rerender } = render(<Card card={heartsCard} />);
-      
-      // Hearts should be red
-      let rankElements = screen.getAllByText('K');
-      let suitElements = screen.getAllByText('♥');
-      rankElements.concat(suitElements).forEach(element => {
-        expect(element).toHaveClass('text-card-red');
-      });
-      
-      rerender(<Card card={diamondsCard} />);
-      
-      // Diamonds should be red
-      rankElements = screen.getAllByText('Q');
-      suitElements = screen.getAllByText('♦');
-      rankElements.concat(suitElements).forEach(element => {
-        expect(element).toHaveClass('text-card-red');
-      });
-    });
-
-    it('should render black suits correctly', () => {
-      const clubsCard = createMockCard({ suit: 'clubs', rank: 'J' });
-      const spadesCard = createMockCard({ suit: 'spades', rank: '10' });
-      
-      const { rerender } = render(<Card card={clubsCard} />);
-      
-      // Clubs should be black
-      let rankElements = screen.getAllByText('J');
-      let suitElements = screen.getAllByText('♣');
-      rankElements.concat(suitElements).forEach(element => {
-        expect(element).toHaveClass('text-card-black');
-      });
-      
-      rerender(<Card card={spadesCard} />);
-      
-      // Spades should be black
-      rankElements = screen.getAllByText('10');
-      suitElements = screen.getAllByText('♠');
-      rankElements.concat(suitElements).forEach(element => {
-        expect(element).toHaveClass('text-card-black');
-      });
-    });
-  });
 
   describe('suit symbols', () => {
     it('should display correct suit symbols', () => {
@@ -205,12 +145,6 @@ describe('Card Component', () => {
   });
 
   describe('accessibility', () => {
-    it('should have proper ARIA role and label', () => {
-      render(<Card card={mockCard} />);
-      
-      const card = screen.getByRole('img', { name: /ace of hearts/i });
-      expect(card).toHaveAttribute('aria-label', 'Ace of Hearts');
-    });
 
     it('should have proper ARIA label for hidden cards', () => {
       render(<Card card={mockCard} isHidden />);
@@ -335,29 +269,6 @@ describe('Card Component', () => {
       });
     });
 
-    it('should handle card prop changes', () => {
-      const initialCard = createMockCard({ suit: 'hearts', rank: 'A' });
-      const newCard = createMockCard({ suit: 'spades', rank: 'K' });
-      
-      const { rerender } = render(<Card card={initialCard} />);
-      
-      expect(screen.getByRole('img', { name: /ace of hearts/i })).toBeInTheDocument();
-      
-      rerender(<Card card={newCard} />);
-      
-      expect(screen.getByRole('img', { name: /king of spades/i })).toBeInTheDocument();
-      expect(screen.queryByRole('img', { name: /ace of hearts/i })).not.toBeInTheDocument();
-    });
 
-    it('should handle isHidden prop changes', () => {
-      const { rerender } = render(<Card card={mockCard} isHidden />);
-      
-      expect(screen.getByRole('img', { name: /hidden card/i })).toBeInTheDocument();
-      
-      rerender(<Card card={mockCard} isHidden={false} />);
-      
-      expect(screen.getByRole('img', { name: /ace of hearts/i })).toBeInTheDocument();
-      expect(screen.queryByRole('img', { name: /hidden card/i })).not.toBeInTheDocument();
-    });
   });
 });

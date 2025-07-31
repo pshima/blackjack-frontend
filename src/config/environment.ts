@@ -235,7 +235,7 @@ try {
     nodeEnv: 'development',
     appVersion: '1.0.0-dev',
     appName: 'Blackjack Casino (Dev)',
-    apiBaseUrl: 'http://localhost:3000/api',
+    apiBaseUrl: 'http://localhost:8080/api',
     apiTimeout: 30000,
     apiRetryAttempts: 3,
     apiRetryDelay: 1000,

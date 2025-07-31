@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { ErrorBoundary } from '../ErrorBoundary';
 import { cardGameApi } from '../../services/cardgame-api';
 import { useBlackjackGame } from '../../hooks/useBlackjackGame';
 
@@ -8,14 +7,14 @@ interface TestStep {
   name: string;
   status: 'pending' | 'running' | 'success' | 'error';
   message: string;
-  data?: any;
+  data?: unknown;
   duration?: number;
 }
 
 export const GameFlowDebug: React.FC = () => {
   const [steps, setSteps] = useState<TestStep[]>([]);
   const [isRunning, setIsRunning] = useState(false);
-  const [gameState, setGameState] = useState<any>(null);
+  const [gameState, setGameState] = useState<unknown>(null);
 
   // Also test with the actual hook
   const blackjackGame = useBlackjackGame();
@@ -34,7 +33,7 @@ export const GameFlowDebug: React.FC = () => {
     ));
   };
 
-  const runStep = async (id: string, name: string, testFn: () => Promise<any>) => {
+  const runStep = async (id: string, name: string, testFn: () => Promise<unknown>) => {
     const startTime = Date.now();
     updateStep(id, { status: 'running', message: 'Running...' });
     
@@ -68,7 +67,7 @@ export const GameFlowDebug: React.FC = () => {
     try {
       // Step 1: Test basic API connection
       addStep({ id: 'api-hello', name: 'API Hello Check' });
-      const helloResult = await runStep('api-hello', 'API Hello Check', () => 
+      await runStep('api-hello', 'API Hello Check', () => 
         cardGameApi.healthCheck()
       );
 
@@ -80,25 +79,25 @@ export const GameFlowDebug: React.FC = () => {
 
       // Step 3: Get initial game state
       addStep({ id: 'get-state-1', name: 'Get Initial Game State' });
-      const initialState = await runStep('get-state-1', 'Get Initial Game State', () =>
+      await runStep('get-state-1', 'Get Initial Game State', () =>
         cardGameApi.getGameState(gameResult.game_id)
       );
 
       // Step 4: Add player
       addStep({ id: 'add-player', name: 'Add Player' });
-      const playerResult = await runStep('add-player', 'Add Player', () =>
+      await runStep('add-player', 'Add Player', () =>
         cardGameApi.addPlayer(gameResult.game_id, 'TestPlayer')
       );
 
       // Step 5: Get game state after player added
       addStep({ id: 'get-state-2', name: 'Get Game State (After Player)' });
-      const stateWithPlayer = await runStep('get-state-2', 'Get Game State (After Player)', () =>
+      await runStep('get-state-2', 'Get Game State (After Player)', () =>
         cardGameApi.getGameState(gameResult.game_id)
       );
 
       // Step 6: Start blackjack game
       addStep({ id: 'start-game', name: 'Start Blackjack Game' });
-      const startResult = await runStep('start-game', 'Start Blackjack Game', () =>
+      await runStep('start-game', 'Start Blackjack Game', () =>
         cardGameApi.startBlackjackGame(gameResult.game_id)
       );
 

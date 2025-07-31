@@ -4,13 +4,13 @@ import { ErrorBoundary } from '../ErrorBoundary';
 // Let's test actual imports at the top level to see if they work
 const TestActualImports: React.FC = () => {
   const [testResults, setTestResults] = useState<string[]>([]);
-  const [loadedComponents, setLoadedComponents] = useState<{[key: string]: React.ComponentType<any>}>({});
+  const [loadedComponents, setLoadedComponents] = useState<{[key: string]: React.ComponentType<unknown>}>({});
 
   const testComponentImport = async (componentName: string, importPath: string) => {
     try {
       setTestResults(prev => [...prev, `🔄 Testing ${componentName}...`]);
       
-      const module = await import(importPath);
+      const module = await import(/* @vite-ignore */ importPath);
       const Component = module[componentName];
       
       if (!Component) {
@@ -71,7 +71,7 @@ const TestActualImports: React.FC = () => {
     }
   };
 
-  const TestComponentRender: React.FC<{ componentName: string; Component: React.ComponentType<any> }> = ({ componentName, Component }) => {
+  const TestComponentRender: React.FC<{ componentName: string; Component: React.ComponentType<unknown> }> = ({ componentName, Component }) => {
     try {
       // Try to render with minimal props
       if (componentName === 'GameTable') {

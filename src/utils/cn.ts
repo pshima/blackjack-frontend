@@ -1,16 +1,11 @@
 import { clsx, type ClassValue } from 'clsx';
 
-/**
- * Utility function for combining class names
- * Uses clsx internally for conditional and dynamic class handling
- */
+// Combines multiple class names using clsx for conditional and dynamic styling
 export function cn(...inputs: ClassValue[]) {
   return clsx(inputs);
 }
 
-/**
- * Predefined class combinations for common UI patterns
- */
+// Pre-defined class combinations for consistent UI patterns across the app
 export const commonClasses = {
   // Button variants
   button: {
@@ -49,19 +44,13 @@ export const commonClasses = {
   },
 } as const;
 
-/**
- * Helper for focus-visible styling
- */
+// Standard focus ring styling for accessibility
 export const focusRing = 'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2';
 
-/**
- * Helper for screen reader only content
- */
+// Hides content visually but keeps it available for screen readers
 export const srOnly = 'sr-only';
 
-/**
- * Helper for responsive breakpoints
- */
+// Tailwind responsive breakpoints for consistent responsive design
 export const responsive = {
   sm: 'sm:',
   md: 'md:',

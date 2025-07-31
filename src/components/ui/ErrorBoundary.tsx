@@ -1,9 +1,8 @@
 import { Component } from 'react';
 import type { ErrorInfo, ReactNode } from 'react';
-import ErrorMessage from '../common/ErrorMessage';
 import { handleErrorBoundaryError, logger } from '../../services/monitoring';
 import { sanitizeXSS } from '../../utils/validation';
-import { config, isProduction } from '../../config/environment';
+import { isProduction } from '../../config/environment';
 
 interface Props {
   children: ReactNode;
@@ -119,7 +118,7 @@ class ErrorBoundary extends Component<Props, State> {
       }
 
       // Create sanitized error for display
-      const displayError = new Error(this.state.sanitizedMessage || 'An unexpected error occurred');
+      new Error(this.state.sanitizedMessage || 'An unexpected error occurred');
       
       return (
         <div className="min-h-screen bg-gradient-to-br from-primary-50 to-primary-100 flex items-center justify-center p-4">

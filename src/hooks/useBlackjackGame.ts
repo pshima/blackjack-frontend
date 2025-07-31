@@ -6,6 +6,26 @@ import type {
   DeckTypeOption,
 } from '../types/cardgame';
 
+// Helper function to wrap async operations with consistent error handling and loading states
+function withAsyncHandling<T extends unknown[]>(
+  operation: (...args: T) => Promise<void>,
+  setIsLoading: (loading: boolean) => void,
+  setError: (error: string | null) => void,
+  handleError: (error: unknown) => void
+) {
+  return async (...args: T) => {
+    setIsLoading(true);
+    setError(null);
+    try {
+      await operation(...args);
+    } catch (error) {
+      handleError(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+}
+
 export interface UseBlackjackGameState {
   gameId: string | null;
   gameState: GameStateResponse | null;
@@ -41,7 +61,7 @@ export function useBlackjackGame(playerId?: string): UseBlackjackGameReturn {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Derived state
+  // Computed values derived from game state for easy access
   const isGameStarted = gameState?.status === 'in_progress' || gameState?.status === 'finished';
   const isGameFinished = gameState?.status === 'finished';
   const currentPlayerIndex = gameState?.current_player ?? -1;
@@ -52,6 +72,7 @@ export function useBlackjackGame(playerId?: string): UseBlackjackGameReturn {
     : null;
   const remainingCards = gameState?.remaining_cards ?? 0;
 
+  // Converts various error types into user-friendly error messages
   const handleError = useCallback((error: unknown) => {
     if (error instanceof CardGameApiError) {
       setError(error.message);
@@ -62,175 +83,176 @@ export function useBlackjackGame(playerId?: string): UseBlackjackGameReturn {
     }
   }, []);
 
+  // Fetches and updates the current game state from the server
   const refreshGameState = useCallback(async (overrideGameId?: string) => {
     const currentGameId = overrideGameId || gameId;
     if (!currentGameId) return;
 
-    setIsLoading(true);
-    setError(null);
-    try {
-      const state = await cardGameApi.getGameState(currentGameId);
-      setGameState(state);
-    } catch (error) {
-      handleError(error);
-    } finally {
-      setIsLoading(false);
-    }
+    await withAsyncHandling(
+      async () => {
+        const state = await cardGameApi.getGameState(currentGameId);
+        setGameState(state);
+      },
+      setIsLoading,
+      setError,
+      handleError
+    )();
   }, [gameId, handleError]);
 
+  // Creates a new blackjack game with specified parameters
   const createNewGame = useCallback(async (
     decks: number = 1,
     type: DeckTypeOption = 'standard',
     maxPlayers: number = 6
   ) => {
-    setIsLoading(true);
-    setError(null);
-    try {
-      const response = await cardGameApi.createGame(decks, type, maxPlayers);
-      setGameId(response.game_id);
-      await refreshGameState(response.game_id);
-    } catch (error) {
-      handleError(error);
-    } finally {
-      setIsLoading(false);
-    }
+    await withAsyncHandling(
+      async () => {
+        const response = await cardGameApi.createGame(decks, type, maxPlayers);
+        setGameId(response.game_id);
+        await refreshGameState(response.game_id);
+      },
+      setIsLoading,
+      setError,
+      handleError
+    )();
   }, [handleError, refreshGameState]);
 
+  // Joins an existing game as a new player
   const joinGame = useCallback(async (gameId: string, playerName: string) => {
-    setIsLoading(true);
-    setError(null);
-    try {
-      setGameId(gameId);
-      await cardGameApi.addPlayer(gameId, playerName);
-      await refreshGameState(gameId);
-    } catch (error) {
-      handleError(error);
-    } finally {
-      setIsLoading(false);
-    }
+    await withAsyncHandling(
+      async () => {
+        setGameId(gameId);
+        await cardGameApi.addPlayer(gameId, playerName);
+        await refreshGameState(gameId);
+      },
+      setIsLoading,
+      setError,
+      handleError
+    )();
   }, [handleError, refreshGameState]);
 
+  // Starts the blackjack game after players have joined
   const startGame = useCallback(async () => {
     if (!gameId) {
       setError('No game ID available');
       return;
     }
 
-    setIsLoading(true);
-    setError(null);
-    try {
-      await cardGameApi.startBlackjackGame(gameId);
-      await refreshGameState();
-    } catch (error) {
-      handleError(error);
-    } finally {
-      setIsLoading(false);
-    }
+    await withAsyncHandling(
+      async () => {
+        await cardGameApi.startBlackjackGame(gameId);
+        await refreshGameState();
+      },
+      setIsLoading,
+      setError,
+      handleError
+    )();
   }, [gameId, refreshGameState, handleError]);
 
+  // Player takes another card (hit action)
   const hit = useCallback(async () => {
     if (!gameId || !playerId) {
       setError('Game ID or Player ID not available');
       return;
     }
 
-    setIsLoading(true);
-    setError(null);
-    try {
-      await cardGameApi.hit(gameId, playerId);
-      await refreshGameState();
-    } catch (error) {
-      handleError(error);
-    } finally {
-      setIsLoading(false);
-    }
+    await withAsyncHandling(
+      async () => {
+        await cardGameApi.hit(gameId, playerId);
+        await refreshGameState();
+      },
+      setIsLoading,
+      setError,
+      handleError
+    )();
   }, [gameId, playerId, refreshGameState, handleError]);
 
+  // Player keeps current hand (stand action)
   const stand = useCallback(async () => {
     if (!gameId || !playerId) {
       setError('Game ID or Player ID not available');
       return;
     }
 
-    setIsLoading(true);
-    setError(null);
-    try {
-      await cardGameApi.stand(gameId, playerId);
-      await refreshGameState();
-    } catch (error) {
-      handleError(error);
-    } finally {
-      setIsLoading(false);
-    }
+    await withAsyncHandling(
+      async () => {
+        await cardGameApi.stand(gameId, playerId);
+        await refreshGameState();
+      },
+      setIsLoading,
+      setError,
+      handleError
+    )();
   }, [gameId, playerId, refreshGameState, handleError]);
 
+  // Adds a new player to the current game
   const addPlayer = useCallback(async (playerName: string) => {
     if (!gameId) {
       setError('No game ID available');
       return;
     }
 
-    setIsLoading(true);
-    setError(null);
-    try {
-      await cardGameApi.addPlayer(gameId, playerName);
-      await refreshGameState();
-    } catch (error) {
-      handleError(error);
-    } finally {
-      setIsLoading(false);
-    }
+    await withAsyncHandling(
+      async () => {
+        await cardGameApi.addPlayer(gameId, playerName);
+        await refreshGameState();
+      },
+      setIsLoading,
+      setError,
+      handleError
+    )();
   }, [gameId, refreshGameState, handleError]);
 
+  // Removes a player from the current game
   const removePlayer = useCallback(async (playerId: string) => {
     if (!gameId) {
       setError('No game ID available');
       return;
     }
 
-    setIsLoading(true);
-    setError(null);
-    try {
-      await cardGameApi.removePlayer(gameId, playerId);
-      await refreshGameState();
-    } catch (error) {
-      handleError(error);
-    } finally {
-      setIsLoading(false);
-    }
+    await withAsyncHandling(
+      async () => {
+        await cardGameApi.removePlayer(gameId, playerId);
+        await refreshGameState();
+      },
+      setIsLoading,
+      setError,
+      handleError
+    )();
   }, [gameId, refreshGameState, handleError]);
 
+  // Resets the deck for the current game
   const resetGame = useCallback(async () => {
     if (!gameId) {
       setError('No game ID available');
       return;
     }
 
-    setIsLoading(true);
-    setError(null);
-    try {
-      await cardGameApi.resetDeck(gameId);
-      await refreshGameState();
-    } catch (error) {
-      handleError(error);
-    } finally {
-      setIsLoading(false);
-    }
+    await withAsyncHandling(
+      async () => {
+        await cardGameApi.resetDeck(gameId);
+        await refreshGameState();
+      },
+      setIsLoading,
+      setError,
+      handleError
+    )();
   }, [gameId, refreshGameState, handleError]);
 
+  // Clears current game state to leave the game
   const leaveGame = useCallback(() => {
     setGameId(null);
     setGameState(null);
     setError(null);
   }, []);
 
-  // Auto-refresh game state periodically when game is in progress
+  // Auto-refreshes game state every 2 seconds during active games
   useEffect(() => {
     if (!gameId || !isGameStarted || isGameFinished) return;
 
     const interval = setInterval(() => {
       refreshGameState();
-    }, 2000); // Refresh every 2 seconds
+    }, 2000);
 
     return () => clearInterval(interval);
   }, [gameId, isGameStarted, isGameFinished, refreshGameState]);

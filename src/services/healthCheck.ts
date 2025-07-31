@@ -29,7 +29,7 @@ export interface HealthCheckResult {
 export interface HealthCheckStatus {
   status: 'pass' | 'fail' | 'warn';
   message: string;
-  details?: any;
+  details?: unknown;
   responseTime?: number;
 }
 
@@ -270,7 +270,7 @@ function checkPerformanceHealth(): HealthCheckStatus {
  */
 function getMemoryUsage(): number | undefined {
   if ('memory' in performance) {
-    const memory = (performance as any).memory;
+    const memory = (performance as { memory: { usedJSHeapSize: number } }).memory;
     return memory.usedJSHeapSize / 1024 / 1024; // Convert to MB
   }
   return undefined;
@@ -283,7 +283,7 @@ export function exposeHealthCheckEndpoint(): void {
   if (typeof window === 'undefined') return;
 
   // Create a global function for external health checks
-  (window as any).__healthCheck = async () => {
+  (window as { __healthCheck?: () => Promise<HealthCheckResult> }).__healthCheck = async () => {
     try {
       return await performHealthCheck();
     } catch (error) {

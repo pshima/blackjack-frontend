@@ -179,7 +179,7 @@ export async function clearServiceWorkerCaches(): Promise<boolean> {
  */
 export function isStandalonePWA(): boolean {
   return window.matchMedia('(display-mode: standalone)').matches ||
-         (window.navigator as any).standalone === true;
+         (window.navigator as { standalone?: boolean }).standalone === true;
 }
 
 /**

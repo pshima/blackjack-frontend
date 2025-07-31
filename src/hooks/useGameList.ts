@@ -56,7 +56,7 @@ export function useGameList(autoRefresh: boolean = false): UseGameListReturn {
     } finally {
       setIsLoading(false);
     }
-  }, [refreshGameList]);
+  }, [refreshGameList, handleError]);
 
   // Initial load
   useEffect(() => {

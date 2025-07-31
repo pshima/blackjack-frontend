@@ -125,7 +125,7 @@ export const mockApiEndpoints = {
 
 // Mock API errors
 export const mockApiError = (status = 500, message = 'API Error') => {
-  const error = new Error(message) as any;
+  const error = new Error(message) as Error & { status: number; name: string };
   error.status = status;
   error.name = 'ApiError';
   return error;

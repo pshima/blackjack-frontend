@@ -6,7 +6,6 @@ import { useDeckTypes } from '../hooks/useDeckTypes';
 
 export const ApiTestPage: React.FC = () => {
   const [testResults, setTestResults] = useState<string[]>([]);
-  const [currentGameId, setCurrentGameId] = useState<string>('');
   const [currentPlayerId, setCurrentPlayerId] = useState<string>('');
   
   const gameList = useGameList(true);

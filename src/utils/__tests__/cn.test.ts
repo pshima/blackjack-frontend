@@ -8,7 +8,9 @@ describe('cn utility function', () => {
   });
 
   it('should handle conditional classes', () => {
-    const result = cn('base', true && 'conditional', false && 'hidden');
+    const shouldShow = true;
+    const shouldHide = false;
+    const result = cn('base', shouldShow && 'conditional', shouldHide && 'hidden');
     expect(result).toBe('base conditional');
   });
 

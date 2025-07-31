@@ -1,7 +1,5 @@
-/**
- * Enhanced Input Validation and Sanitization
- * Comprehensive validation for all user inputs with security focus
- */
+// Enhanced Input Validation and Sanitization utilities
+// Provides comprehensive validation for all user inputs with security focus
 
 import { logger } from '../services/monitoring';
 import { config } from '../config/environment';
@@ -9,7 +7,7 @@ import { config } from '../config/environment';
 export interface ValidationResult {
   isValid: boolean;
   errors: string[];
-  sanitized?: any;
+  sanitized?: unknown;
 }
 
 export interface ValidationRule {
@@ -17,17 +15,15 @@ export interface ValidationRule {
   min?: number;
   max?: number;
   pattern?: RegExp;
-  custom?: (value: any) => boolean;
-  sanitize?: (value: any) => any;
+  custom?: (value: unknown) => boolean;
+  sanitize?: (value: unknown) => unknown;
 }
 
 export interface ValidationSchema {
   [key: string]: ValidationRule;
 }
 
-/**
- * XSS Prevention Patterns
- */
+// Common XSS attack patterns to detect and prevent
 const XSS_PATTERNS = [
   /<script[^>]*>.*?<\/script>/gi,
   /javascript:/gi,
@@ -45,9 +41,7 @@ const XSS_PATTERNS = [
   /<svg[^>]*on\w+/gi,
 ];
 
-/**
- * SQL Injection Prevention Patterns
- */
+// SQL injection attack patterns to detect and block
 const SQL_INJECTION_PATTERNS = [
   /(\b(ALTER|CREATE|DELETE|DROP|EXEC|EXECUTE|INSERT|MERGE|SELECT|UPDATE|UNION)\b)/gi,
   /(--|#|\/\*|\*\/)/,
@@ -59,9 +53,7 @@ const SQL_INJECTION_PATTERNS = [
   /DELETE.*FROM/gi,
 ];
 
-/**
- * Command Injection Prevention Patterns
- */
+// Command injection patterns that could be used for system attacks
 const COMMAND_INJECTION_PATTERNS = [
   /[;&|`$(){}[\]]/,
   /\.\.\//,
@@ -73,9 +65,7 @@ const COMMAND_INJECTION_PATTERNS = [
   /sh\s/,
 ];
 
-/**
- * Sanitize input string to prevent XSS
- */
+// Removes dangerous XSS patterns and HTML-encodes special characters
 export function sanitizeXSS(input: string): string {
   if (typeof input !== 'string') return '';
   
@@ -98,75 +88,78 @@ export function sanitizeXSS(input: string): string {
   return sanitized;
 }
 
-/**
- * Validate input against SQL injection patterns
- */
+// Returns false if input contains SQL injection patterns
 export function validateSQLInjection(input: string): boolean {
   if (typeof input !== 'string') return true;
   
   return !SQL_INJECTION_PATTERNS.some(pattern => pattern.test(input));
 }
 
-/**
- * Validate input against command injection patterns
- */
+// Returns false if input contains command injection patterns
 export function validateCommandInjection(input: string): boolean {
   if (typeof input !== 'string') return true;
   
   return !COMMAND_INJECTION_PATTERNS.some(pattern => pattern.test(input));
 }
 
-/**
- * Validate bet amount with comprehensive checks
- */
-export function validateBetAmount(amount: any): ValidationResult {
-  const errors: string[] = [];
-  
-  // Type validation
+// Converts input to a valid number, handling both strings and numbers
+function parseAmountToNumber(amount: unknown): { value: number; isValid: boolean; error?: string } {
   if (typeof amount !== 'number' && typeof amount !== 'string') {
-    errors.push('Bet amount must be a number');
-    return { isValid: false, errors };
+    return { value: 0, isValid: false, error: 'Bet amount must be a number' };
   }
   
-  // Convert to number if string
   const numAmount = typeof amount === 'string' ? parseFloat(amount) : amount;
   
-  // NaN check
   if (isNaN(numAmount)) {
-    errors.push('Bet amount must be a valid number');
-    return { isValid: false, errors };
+    return { value: 0, isValid: false, error: 'Bet amount must be a valid number' };
   }
   
-  // Range validation
-  if (numAmount < config.minBet) {
+  return { value: numAmount, isValid: true };
+}
+
+// Validates that a number falls within betting limits and has proper format
+function validateBetRange(amount: number): string[] {
+  const errors: string[] = [];
+  
+  if (amount <= 0) {
+    errors.push('Bet amount must be positive');
+  }
+  
+  if (amount < config.minBet) {
     errors.push(`Bet amount must be at least $${config.minBet}`);
   }
   
-  if (numAmount > config.maxBet) {
+  if (amount > config.maxBet) {
     errors.push(`Bet amount cannot exceed $${config.maxBet}`);
   }
   
   // Decimal places validation (max 2 decimal places for currency)
-  if (numAmount % 0.01 !== 0) {
+  if (amount % 0.01 !== 0) {
     errors.push('Bet amount can have at most 2 decimal places');
   }
   
-  // Negative number check
-  if (numAmount <= 0) {
-    errors.push('Bet amount must be positive');
+  return errors;
+}
+
+// Validates betting amounts with range, format, and security checks
+export function validateBetAmount(amount: unknown): ValidationResult {
+  const parseResult = parseAmountToNumber(amount);
+  
+  if (!parseResult.isValid) {
+    return { isValid: false, errors: [parseResult.error!] };
   }
   
+  const rangeErrors = validateBetRange(parseResult.value);
+  
   return {
-    isValid: errors.length === 0,
-    errors,
-    sanitized: Math.round(numAmount * 100) / 100 // Round to 2 decimal places
+    isValid: rangeErrors.length === 0,
+    errors: rangeErrors,
+    sanitized: Math.round(parseResult.value * 100) / 100 // Round to 2 decimal places
   };
 }
 
-/**
- * Validate player ID
- */
-export function validatePlayerId(playerId: any): ValidationResult {
+// Validates player IDs for proper format and security
+export function validatePlayerId(playerId: unknown): ValidationResult {
   const errors: string[] = [];
   
   if (!playerId) {
@@ -202,10 +195,8 @@ export function validatePlayerId(playerId: any): ValidationResult {
   };
 }
 
-/**
- * Validate game ID
- */
-export function validateGameId(gameId: any): ValidationResult {
+// Validates game IDs to ensure they are proper UUIDs
+export function validateGameId(gameId: unknown): ValidationResult {
   const errors: string[] = [];
   
   if (!gameId) {
@@ -231,12 +222,10 @@ export function validateGameId(gameId: any): ValidationResult {
   };
 }
 
-/**
- * Generic validation function using schema
- */
-export function validateObject(data: any, schema: ValidationSchema): ValidationResult {
+// Validates any object against a provided schema with field-by-field checks
+export function validateObject(data: unknown, schema: ValidationSchema): ValidationResult {
   const errors: string[] = [];
-  const sanitized: any = {};
+  const sanitized: Record<string, unknown> = {};
   
   for (const [field, rule] of Object.entries(schema)) {
     const value = data[field];
@@ -299,10 +288,8 @@ export function validateObject(data: any, schema: ValidationSchema): ValidationR
   };
 }
 
-/**
- * Validate authentication token
- */
-export function validateAuthToken(token: any): ValidationResult {
+// Validates JWT authentication tokens for proper format and length
+export function validateAuthToken(token: unknown): ValidationResult {
   const errors: string[] = [];
   
   if (!token) {
@@ -333,20 +320,20 @@ export function validateAuthToken(token: any): ValidationResult {
   };
 }
 
-/**
- * Rate limiting validation per user action
- */
+// Tracks user actions to prevent abuse through rate limiting
 const actionCounts = new Map<string, number[]>();
 
+// Filters out old actions beyond the time window
+function getRecentActions(actions: number[], timeWindow: number): number[] {
+  const now = Date.now();
+  return actions.filter(timestamp => now - timestamp < timeWindow);
+}
+
+// Checks if user has exceeded rate limit for a specific action
 export function validateRateLimit(userId: string, action: string, maxActions: number = 10, timeWindow: number = 60000): boolean {
   const key = `${userId}:${action}`;
-  const now = Date.now();
-  
-  // Get or initialize action history
   const actions = actionCounts.get(key) || [];
-  
-  // Remove actions outside time window
-  const recentActions = actions.filter(timestamp => now - timestamp < timeWindow);
+  const recentActions = getRecentActions(actions, timeWindow);
   
   // Check if limit exceeded
   if (recentActions.length >= maxActions) {
@@ -359,18 +346,16 @@ export function validateRateLimit(userId: string, action: string, maxActions: nu
     return false;
   }
   
-  // Add current action
-  recentActions.push(now);
+  // Add current action and update cache
+  recentActions.push(Date.now());
   actionCounts.set(key, recentActions);
   
   return true;
 }
 
-/**
- * Input validation middleware for API requests
- */
+// Creates a reusable validation middleware function for API requests
 export function createValidationMiddleware(schema: ValidationSchema) {
-  return (data: any): ValidationResult => {
+  return (data: unknown): ValidationResult => {
     // Log validation attempt for security monitoring
     logger.debug('Input validation performed', {
       fields: Object.keys(schema),
@@ -390,17 +375,15 @@ export function createValidationMiddleware(schema: ValidationSchema) {
   };
 }
 
-/**
- * Predefined validation schemas
- */
+// Pre-configured validation schemas for common use cases
 export const validationSchemas = {
   startGame: {
     bet: {
       required: true,
       min: config.minBet,
       max: config.maxBet,
-      custom: (value: any) => typeof value === 'number' && value > 0,
-      sanitize: (value: any) => Math.round(parseFloat(value) * 100) / 100
+      custom: (value: unknown) => typeof value === 'number' && value > 0,
+      sanitize: (value: unknown) => Math.round(parseFloat(value as string) * 100) / 100
     },
     playerId: {
       required: false,

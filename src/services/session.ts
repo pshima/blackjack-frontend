@@ -5,7 +5,7 @@
 
 import { logger } from './monitoring';
 import { authService } from './auth';
-import { config, isProduction } from '../config/environment';
+import { isProduction } from '../config/environment';
 import { sanitizeXSS } from '../utils/validation';
 
 export interface SessionData {
@@ -494,11 +494,11 @@ class SessionManager {
   /**
    * Throttle function calls
    */
-  private throttle<T extends (...args: any[]) => any>(func: T, delay: number): T {
+  private throttle<T extends (...args: unknown[]) => unknown>(func: T, delay: number): T {
     let timeoutId: NodeJS.Timeout | null = null;
     let lastExecTime = 0;
     
-    return ((...args: any[]) => {
+    return ((...args: unknown[]) => {
       const currentTime = Date.now();
       
       if (currentTime - lastExecTime > delay) {

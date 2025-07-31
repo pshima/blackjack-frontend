@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { ErrorBoundary } from '../ErrorBoundary';
 
 export const CorsDebug: React.FC = () => {
   const [corsTest, setCorsTest] = useState<{

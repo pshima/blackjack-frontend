@@ -8,7 +8,7 @@ interface UseApiState<T> {
   retry: () => void;
 }
 
-export function useApi<T>(endpoint: string, dependencies: any[] = []): UseApiState<T> {
+export function useApi<T>(endpoint: string, dependencies: unknown[] = []): UseApiState<T> {
   const [state, setState] = useState<Omit<UseApiState<T>, 'retry'>>({
     data: null,
     loading: true,
@@ -42,7 +42,7 @@ export function useApi<T>(endpoint: string, dependencies: any[] = []): UseApiSta
 
   useEffect(() => {
     fetchData();
-  }, [fetchData, ...dependencies]);
+  }, [fetchData, dependencies]);
 
   return { ...state, retry: fetchData };
 }
@@ -51,11 +51,11 @@ interface UseApiMutationState<T> {
   data: T | null;
   loading: boolean;
   error: ApiError | null;
-  mutate: (endpoint: string, data?: any, method?: 'POST' | 'PUT' | 'DELETE') => Promise<T>;
+  mutate: (endpoint: string, data?: unknown, method?: 'POST' | 'PUT' | 'DELETE') => Promise<T>;
   reset: () => void;
 }
 
-export function useApiMutation<T, P = any>(): UseApiMutationState<T> {
+export function useApiMutation<T, P = unknown>(): UseApiMutationState<T> {
   const [state, setState] = useState<Omit<UseApiMutationState<T>, 'mutate' | 'reset'>>({
     data: null,
     loading: false,

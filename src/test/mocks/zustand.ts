@@ -1,6 +1,5 @@
 import { vi } from 'vitest';
 import type { GameStore } from '../../stores/gameStore';
-import { createMockGameState, createMockPlayer } from '../utils/test-utils';
 
 // Create a mock Zustand store
 export const createMockGameStore = (initialState: Partial<GameStore> = {}): GameStore => ({

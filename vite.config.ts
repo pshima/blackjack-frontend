@@ -5,9 +5,8 @@ import { visualizer } from 'rollup-plugin-visualizer'
 import { sentryVitePlugin } from '@sentry/vite-plugin'
 
 // https://vite.dev/config/
-export default defineConfig(({ command, mode }) => {
+export default defineConfig(({ mode }) => {
   const isProduction = mode === 'production'
-  const isDevelopment = mode === 'development'
   
   return {
     plugins: [
@@ -68,10 +67,7 @@ export default defineConfig(({ command, mode }) => {
           },
           
           // Optimize chunk names for caching
-          chunkFileNames: (chunkInfo) => {
-            const facadeModuleId = chunkInfo.facadeModuleId
-              ? chunkInfo.facadeModuleId.split('/').pop()
-              : 'chunk'
+          chunkFileNames: () => {
             return `assets/[name]-[hash].js`
           },
           assetFileNames: 'assets/[name]-[hash].[ext]',

@@ -5,7 +5,7 @@ import { BlackjackGame } from '../game/BlackjackGame';
 
 export const BlackjackGameStateMonitor: React.FC = () => {
   const [showGame, setShowGame] = useState(false);
-  const [stateHistory, setStateHistory] = useState<any[]>([]);
+  const [stateHistory, setStateHistory] = useState<unknown[]>([]);
   const [monitoring, setMonitoring] = useState(false);
 
   // Monitor the hook directly

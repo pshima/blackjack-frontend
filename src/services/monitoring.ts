@@ -250,7 +250,7 @@ export class PerformanceMonitor {
   /**
    * Monitor React component render times
    */
-  componentRenderTime(componentName: string): (props?: any) => void {
+  componentRenderTime(componentName: string): (props?: unknown) => void {
     return this.startTimer(`component_render_${componentName}`);
   }
 }

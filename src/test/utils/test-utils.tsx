@@ -1,6 +1,7 @@
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
 import { render, RenderOptions } from '@testing-library/react';
 import { vi } from 'vitest';
+import { AllTheProviders } from './TestProviders';
 
 // Mock Zustand store for testing
 const mockGameStore = {
@@ -21,22 +22,29 @@ const mockGameStore = {
   updatePlayerBalance: vi.fn(),
 };
 
-// Create a wrapper component that provides necessary context
-const AllTheProviders = ({ children }: { children: React.ReactNode }) => {
-  return (
-    <div data-testid="test-wrapper">
-      {children}
-    </div>
-  );
-};
-
 const customRender = (
   ui: ReactElement,
   options?: Omit<RenderOptions, 'wrapper'>
 ) => render(ui, { wrapper: AllTheProviders, ...options });
 
-// Re-export everything
-export * from '@testing-library/react';
+// Re-export specific utilities (avoid export *)
+export { 
+  screen, 
+  fireEvent, 
+  waitFor, 
+  waitForElementToBeRemoved,
+  within,
+  getByRole,
+  queryByRole,
+  findByRole,
+  getByText,
+  queryByText,
+  findByText,
+  getByTestId,
+  queryByTestId,
+  findByTestId,
+  act
+} from '@testing-library/react';
 export { customRender as render };
 
 // Test utilities
@@ -102,7 +110,7 @@ export const createMockGameActionResponse = (overrides = {}) => ({
 export const waitForAsync = () => new Promise(resolve => setTimeout(resolve, 0));
 
 // Mock fetch responses helper
-export const mockFetchResponse = (data: any, status = 200) => ({
+export const mockFetchResponse = (data: unknown, status = 200) => ({
   ok: status >= 200 && status < 300,
   status,
   json: vi.fn().mockResolvedValue(data),
@@ -113,7 +121,7 @@ export const mockFetchResponse = (data: any, status = 200) => ({
 
 // Create mock error
 export const createMockApiError = (status = 500, message = 'Test error') => {
-  const error = new Error(message) as any;
+  const error = new Error(message) as Error & { status: number; name: string };
   error.status = status;
   error.name = 'ApiError';
   return error;

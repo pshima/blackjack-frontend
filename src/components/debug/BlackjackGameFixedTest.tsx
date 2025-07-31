@@ -29,7 +29,7 @@ export const BlackjackGameFixedTest: React.FC = () => {
       
       // Test add player
       const player = await cardGameApi.addPlayer(game.game_id, 'TestPlayer');
-      addResult(`✅ Add player: ${player.player_id.slice(-8)}`);
+      addResult(`✅ Add player: ${player.player.id.slice(-8)}`);
       
       // Test shuffle deck BEFORE starting blackjack
       const shuffleResult = await cardGameApi.shuffleDeck(game.game_id);
@@ -41,8 +41,8 @@ export const BlackjackGameFixedTest: React.FC = () => {
       
       // Test get final state
       const finalState = await cardGameApi.getGameState(game.game_id);
-      addResult(`✅ Final state: ${finalState.players[0].cards.length} cards dealt to player`);
-      addResult(`✅ Final state: ${finalState.dealer.cards.length} cards dealt to dealer`);
+      addResult(`✅ Final state: ${finalState.players[0].hand.length} cards dealt to player`);
+      addResult(`✅ Final state: ${finalState.dealer.hand.length} cards dealt to dealer`);
       
       addResult('🎯 Backend connectivity test PASSED - All APIs working correctly');
       

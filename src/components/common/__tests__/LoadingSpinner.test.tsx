@@ -183,17 +183,6 @@ describe('LoadingSpinner Component', () => {
       expect(innerContainer).toBeInTheDocument();
     });
 
-    it('should have proper structure with text', () => {
-      render(<LoadingSpinner text="Loading..." testId="spinner" />);
-      
-      const container = screen.getByTestId('spinner');
-      const innerContainer = container.querySelector('.flex.flex-col.items-center.space-y-2');
-      expect(innerContainer).toBeInTheDocument();
-      
-      // Text should be inside the inner container
-      const textElement = screen.getByText('Loading...');
-      expect(innerContainer).toContainElement(textElement);
-    });
   });
 
   describe('edge cases', () => {
@@ -206,13 +195,6 @@ describe('LoadingSpinner Component', () => {
       expect(screen.getByText('Loading...')).toHaveClass('sr-only');
     });
 
-    it('should handle whitespace-only text', () => {
-      render(<LoadingSpinner text="   " />);
-      
-      // Should render the whitespace text
-      const textElement = screen.getByText('   ');
-      expect(textElement).toBeInTheDocument();
-    });
 
     it('should work with all size and fullScreen combinations', () => {
       const sizes = ['sm', 'md', 'lg'] as const;

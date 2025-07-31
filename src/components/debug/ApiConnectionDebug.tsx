@@ -45,7 +45,7 @@ export const ApiConnectionDebug: React.FC = () => {
       const responseTime = Date.now() - startTime;
       
       if (response.ok) {
-        const data = await response.text();
+        await response.text();
         updateTest(name, {
           status: 'success',
           message: `✅ ${response.status} ${response.statusText} (${responseTime}ms)`,
@@ -68,7 +68,7 @@ export const ApiConnectionDebug: React.FC = () => {
     }
   };
 
-  const testCardGameApi = async (name: string, apiMethod: () => Promise<any>): Promise<void> => {
+  const testCardGameApi = async (name: string, apiMethod: () => Promise<unknown>): Promise<void> => {
     const startTime = Date.now();
     try {
       await apiMethod();

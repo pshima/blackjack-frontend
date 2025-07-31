@@ -53,11 +53,16 @@ describe('ApiService', () => {
 
   beforeEach(() => {
     service = new ApiService('http://test-api.com');
+    // Override retry settings for faster tests
+    (service as any).retryAttempts = 0;
+    (service as any).retryDelay = 0;
     vi.clearAllMocks();
+    vi.useFakeTimers();
   });
 
   afterEach(() => {
     vi.restoreAllMocks();
+    vi.useRealTimers();
   });
 
   describe('constructor', () => {
@@ -79,12 +84,13 @@ describe('ApiService', () => {
 
       const result = await service.get('/test');
 
-      expect(mockFetch).toHaveBeenCalledWith('http://test-api.com/test', {
-        headers: {
+      expect(mockFetch).toHaveBeenCalledWith('http://test-api.com/test', expect.objectContaining({
+        headers: expect.objectContaining({
           'Content-Type': 'application/json',
-        },
+        }),
         method: 'GET',
-      });
+        signal: expect.any(AbortSignal),
+      }));
       expect(result).toEqual(mockData);
     });
 
@@ -129,12 +135,16 @@ describe('ApiService', () => {
 
       await service.get('/test');
 
-      expect(mockFetch).toHaveBeenCalledWith('http://test-api.com/test', {
-        headers: {
+      expect(mockFetch).toHaveBeenCalledWith('http://test-api.com/test', expect.objectContaining({
+        headers: expect.objectContaining({
           'Content-Type': 'application/json',
-        },
+          'X-API-Version': '1.0',
+          'X-Client-Version': '1.0.0',
+          'X-Requested-With': 'XMLHttpRequest',
+        }),
         method: 'GET',
-      });
+        signal: expect.any(AbortSignal),
+      }));
     });
   });
 
@@ -146,41 +156,53 @@ describe('ApiService', () => {
     it('should make GET requests', async () => {
       await service.get('/test');
 
-      expect(mockFetch).toHaveBeenCalledWith('http://test-api.com/test', {
+      expect(mockFetch).toHaveBeenCalledWith('http://test-api.com/test', expect.objectContaining({
         method: 'GET',
-        headers: { 'Content-Type': 'application/json' },
-      });
+        headers: expect.objectContaining({
+          'Content-Type': 'application/json',
+        }),
+        signal: expect.any(AbortSignal),
+      }));
     });
 
     it('should make POST requests', async () => {
       const data = { test: 'data' };
       await service.post('/test', data);
 
-      expect(mockFetch).toHaveBeenCalledWith('http://test-api.com/test', {
+      expect(mockFetch).toHaveBeenCalledWith('http://test-api.com/test', expect.objectContaining({
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: expect.objectContaining({
+          'Content-Type': 'application/json',
+        }),
         body: JSON.stringify(data),
-      });
+        signal: expect.any(AbortSignal),
+      }));
     });
 
     it('should make PUT requests', async () => {
       const data = { test: 'data' };
       await service.put('/test', data);
 
-      expect(mockFetch).toHaveBeenCalledWith('http://test-api.com/test', {
+      expect(mockFetch).toHaveBeenCalledWith('http://test-api.com/test', expect.objectContaining({
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
+        headers: expect.objectContaining({
+          'Content-Type': 'application/json',
+        }),
         body: JSON.stringify(data),
-      });
+        signal: expect.any(AbortSignal),
+      }));
     });
 
     it('should make DELETE requests', async () => {
       await service.delete('/test');
 
-      expect(mockFetch).toHaveBeenCalledWith('http://test-api.com/test', {
+      expect(mockFetch).toHaveBeenCalledWith('http://test-api.com/test', expect.objectContaining({
         method: 'DELETE',
-        headers: { 'Content-Type': 'application/json' },
-      });
+        headers: expect.objectContaining({
+          'Content-Type': 'application/json',
+        }),
+        signal: expect.any(AbortSignal),
+      }));
     });
   });
 
@@ -196,85 +218,103 @@ describe('ApiService', () => {
 
       const result = await service.startGame(request);
 
-      expect(mockFetch).toHaveBeenCalledWith('http://test-api.com/game/start', {
+      expect(mockFetch).toHaveBeenCalledWith('http://test-api.com/game/start', expect.objectContaining({
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: expect.objectContaining({
+          'Content-Type': 'application/json',
+        }),
         body: JSON.stringify(request),
-      });
+        signal: expect.any(AbortSignal),
+      }));
       expect(result).toEqual(mockResponse);
     });
 
     it('should hit in a game', async () => {
-      const gameId = 'game123';
+      const gameId = '550e8400-e29b-41d4-a716-446655440000';
       const mockResponse = createMockGameActionResponse();
       mockFetch.mockResolvedValue(mockFetchResponse(mockResponse));
 
       const result = await service.hit(gameId);
 
-      expect(mockFetch).toHaveBeenCalledWith('http://test-api.com/game/game123/hit', {
+      expect(mockFetch).toHaveBeenCalledWith('http://test-api.com/game/550e8400-e29b-41d4-a716-446655440000/hit', expect.objectContaining({
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: expect.objectContaining({
+          'Content-Type': 'application/json',
+        }),
         body: JSON.stringify({}),
-      });
+        signal: expect.any(AbortSignal),
+      }));
       expect(result).toEqual(mockResponse);
     });
 
     it('should stand in a game', async () => {
-      const gameId = 'game123';
+      const gameId = '550e8400-e29b-41d4-a716-446655440000';
       const mockResponse = createMockGameActionResponse();
       mockFetch.mockResolvedValue(mockFetchResponse(mockResponse));
 
       const result = await service.stand(gameId);
 
-      expect(mockFetch).toHaveBeenCalledWith('http://test-api.com/game/game123/stand', {
+      expect(mockFetch).toHaveBeenCalledWith('http://test-api.com/game/550e8400-e29b-41d4-a716-446655440000/stand', expect.objectContaining({
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: expect.objectContaining({
+          'Content-Type': 'application/json',
+        }),
         body: JSON.stringify({}),
-      });
+        signal: expect.any(AbortSignal),
+      }));
       expect(result).toEqual(mockResponse);
     });
 
     it('should double down in a game', async () => {
-      const gameId = 'game123';
+      const gameId = '550e8400-e29b-41d4-a716-446655440000';
       const mockResponse = createMockGameActionResponse();
       mockFetch.mockResolvedValue(mockFetchResponse(mockResponse));
 
       const result = await service.doubleDown(gameId);
 
-      expect(mockFetch).toHaveBeenCalledWith('http://test-api.com/game/game123/double', {
+      expect(mockFetch).toHaveBeenCalledWith('http://test-api.com/game/550e8400-e29b-41d4-a716-446655440000/double', expect.objectContaining({
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: expect.objectContaining({
+          'Content-Type': 'application/json',
+        }),
         body: JSON.stringify({}),
-      });
+        signal: expect.any(AbortSignal),
+      }));
       expect(result).toEqual(mockResponse);
     });
 
     it('should split in a game', async () => {
-      const gameId = 'game123';
+      const gameId = '550e8400-e29b-41d4-a716-446655440000';
       const mockResponse = createMockGameActionResponse();
       mockFetch.mockResolvedValue(mockFetchResponse(mockResponse));
 
       const result = await service.split(gameId);
 
-      expect(mockFetch).toHaveBeenCalledWith('http://test-api.com/game/game123/split', {
+      expect(mockFetch).toHaveBeenCalledWith('http://test-api.com/game/550e8400-e29b-41d4-a716-446655440000/split', expect.objectContaining({
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: expect.objectContaining({
+          'Content-Type': 'application/json',
+        }),
         body: JSON.stringify({}),
-      });
+        signal: expect.any(AbortSignal),
+      }));
       expect(result).toEqual(mockResponse);
     });
 
     it('should get game state', async () => {
-      const gameId = 'game123';
+      const gameId = '550e8400-e29b-41d4-a716-446655440000';
       const mockGameState = { id: gameId, gameStatus: 'playing' };
       mockFetch.mockResolvedValue(mockFetchResponse(mockGameState));
 
       const result = await service.getGameState(gameId);
 
-      expect(mockFetch).toHaveBeenCalledWith('http://test-api.com/game/game123', {
+      expect(mockFetch).toHaveBeenCalledWith('http://test-api.com/game/550e8400-e29b-41d4-a716-446655440000', expect.objectContaining({
         method: 'GET',
-        headers: { 'Content-Type': 'application/json' },
-      });
+        headers: expect.objectContaining({
+          'Content-Type': 'application/json',
+        }),
+        signal: expect.any(AbortSignal),
+      }));
       expect(result).toEqual(mockGameState);
     });
 
@@ -285,10 +325,13 @@ describe('ApiService', () => {
 
       const result = await service.getPlayer(playerId);
 
-      expect(mockFetch).toHaveBeenCalledWith('http://test-api.com/player/player123', {
+      expect(mockFetch).toHaveBeenCalledWith('http://test-api.com/player/player123', expect.objectContaining({
         method: 'GET',
-        headers: { 'Content-Type': 'application/json' },
-      });
+        headers: expect.objectContaining({
+          'Content-Type': 'application/json',
+        }),
+        signal: expect.any(AbortSignal),
+      }));
       expect(result).toEqual(mockPlayer);
     });
 
@@ -299,10 +342,13 @@ describe('ApiService', () => {
 
       const result = await service.getPlayerStats(playerId);
 
-      expect(mockFetch).toHaveBeenCalledWith('http://test-api.com/player/player123/stats', {
+      expect(mockFetch).toHaveBeenCalledWith('http://test-api.com/player/player123/stats', expect.objectContaining({
         method: 'GET',
-        headers: { 'Content-Type': 'application/json' },
-      });
+        headers: expect.objectContaining({
+          'Content-Type': 'application/json',
+        }),
+        signal: expect.any(AbortSignal),
+      }));
       expect(result).toEqual(mockStats);
     });
   });
@@ -316,13 +362,13 @@ describe('ApiService', () => {
         headers: new Headers({ 'content-type': 'application/json' }),
       });
 
-      await expect(service.startGame({ bet: -10 })).rejects.toThrow('Invalid bet amount');
+      await expect(service.startGame({ bet: -10 })).rejects.toThrow(/Invalid/);
     });
 
     it('should propagate network errors', async () => {
       mockFetch.mockRejectedValue(new Error('Connection failed'));
 
-      await expect(service.hit('game123')).rejects.toThrow(ApiError);
+      await expect(service.hit('550e8400-e29b-41d4-a716-446655440000')).rejects.toThrow(ApiError);
     });
   });
 });
