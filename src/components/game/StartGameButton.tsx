@@ -13,7 +13,7 @@ export function StartGameButton({ onStartGame, isLoading, error }: StartGameButt
         disabled={isLoading}
         className="px-6 py-3 text-white font-semibold cursor-pointer transition-all min-w-32 bg-primary-700 hover:bg-primary-600 hover:-translate-y-0.5 hover:shadow-lg disabled:bg-gray-600 disabled:cursor-not-allowed disabled:hover:transform-none disabled:hover:shadow-xs shadow-md border-2 border-black"
       >
-        {isLoading ? 'Starting Game...' : 'Start Game'}
+        {isLoading ? 'Starting Game...' : 'Start'}
       </button>
       
       {error && (

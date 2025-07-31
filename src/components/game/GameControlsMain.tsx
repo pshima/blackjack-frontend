@@ -31,7 +31,7 @@ export function GameControlsMain({
         disabled={disabled}
         className="px-6 py-3 text-white font-semibold transition-all min-w-32 bg-primary-700 hover:bg-primary-600 hover:-translate-y-0.5 hover:shadow-lg disabled:bg-gray-600 disabled:cursor-not-allowed disabled:hover:transform-none shadow-md border-2 border-black"
       >
-        {isDealLoading ? 'Dealing...' : 'Deal'}
+        {isDealLoading ? 'Dealing...' : 'DEAL'}
       </button>
     );
   }
@@ -56,7 +56,7 @@ export function GameControlsMain({
           disabled={hitDisabled}
           className="px-6 py-3 text-white font-semibold transition-all min-w-24 bg-primary-700 hover:bg-primary-600 hover:-translate-y-0.5 hover:shadow-lg disabled:bg-gray-600 disabled:cursor-not-allowed disabled:hover:transform-none shadow-md border-2 border-black"
         >
-          Hit
+          HIT
         </button>
 
         {/* Stand Button */}
@@ -65,7 +65,7 @@ export function GameControlsMain({
           disabled={standDisabled}
           className="px-6 py-3 text-white font-semibold transition-all min-w-24 bg-red-600 hover:bg-red-700 hover:-translate-y-0.5 hover:shadow-lg disabled:bg-gray-600 disabled:cursor-not-allowed disabled:hover:transform-none shadow-md border-2 border-black"
         >
-          Stand
+          STAND
         </button>
       </div>
     );
